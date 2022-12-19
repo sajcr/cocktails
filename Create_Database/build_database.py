@@ -22,7 +22,7 @@ def get_drink(drink_id):
     return data
 
 
-"""builds and returns raw_cocktails.csv 7842"""
+"""builds and returns raw_cocktails.csv (standard iterations on line 81 = 7842)"""
 
 
 def get_cocktails():
@@ -78,7 +78,7 @@ def get_cocktails():
         # file.write(f"\n")
 
         # iterate through drink ids submitting each as a request for data
-        for n in range(10):
+        for n in range(7842):
 
             # print number of request to stout to indicate progress
             print(n, end="")
