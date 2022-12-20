@@ -5,6 +5,7 @@ import csv
 import pandas
 import sqlite3
 import re
+from cs50 import SQL
 
 
 """downloads cocktail information http://thecocktaildb.com returns JSON"""
@@ -300,7 +301,7 @@ def write_cocktails():
 
     # initiate table
     conn.execute(
-        "CREATE TABLE if not exists cocktails (idDrink INT PRIMARY KEY,strDrink,strCategory,strIBA,strAlcoholic,strGlass,strIngredient1,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15,strMeasure1,strMeasure2,strMeasure3,strMeasure4,strMeasure5,strMeasure6,strMeasure7,strMeasure8,strMeasure9,strMeasure10,strMeasure11,strMeasure12,strMeasure13,strMeasure14,strMeasure15)"
+        "CREATE TABLE if not exists cocktails (idDrink INT PRIMARY KEY,strDrink,strCategory,strIBA,strAlcoholic,strGlass,strIngredient1,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15,strMeasure1,strMeasure2,strMeasure3,strMeasure4,strMeasure5,strMeasure6,strMeasure7,strMeasure8,strMeasure9,strMeasure10,strMeasure11,strMeasure12,strMeasure13,strMeasure14,strMeasure15,strInstructions)"
     )
 
     # write data
@@ -377,14 +378,41 @@ def write_ingredients():
     # write data
     df = pandas.read_csv("ingredients.csv")
     df.to_sql("ingredients", conn, if_exists="append", index=False)
+    
 
+def add_recipies():
+  db = SQL("sqlite:///../cocktails.db")
+
+  # initiate table
+  drink_ids = db.execute("SELECT idDrink FROM cocktails") 
+  
+  for drink_id in drink_ids:
+    
+    request = drink_id['idDrink'] - 11000
+    
+    cocktail = get_drink(request)
+    
+    strInstructions = (cocktail['drinks'][0]['strInstructions'])
+    
+#    print(strInstructions)
+    db.execute("UPDATE cocktails SET strInstructions = ? WHERE idDrink = ?", strInstructions, drink_id['idDrink'])
+    
+    
+    
+    
+    
+    
+    
+  
+
+    
 
 def main():
     while True:
         print(
-            "\n1. Get cocktails.csv \n2. Write cocktails to database \n3. Check ingredients \n4. Write ingredients to database\n"
+            "\n1. Get cocktails.csv \n2. Write cocktails to database \n3. Check ingredients \n4. Write ingredients to database\n5. Add recipies to database\n"
         )
-        choice = input("Enter 1, 2, 3 or 4: ")
+        choice = input("Enter 1, 2, 3, 4 or 5: ")
         if choice == "1":
             get_cocktails()
             print("\n Don't forget to clean up cocktails.csv before proceeding")
@@ -394,6 +422,8 @@ def main():
             check_ingredients()
         elif choice == "4":
             write_ingredients()
+        elif choice == "5":
+            add_recipies()
         else:
             pass
 
