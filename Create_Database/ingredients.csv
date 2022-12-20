@@ -1,5 +1,5 @@
 ﻿ingredient,item,category
-7,Lemonade,Mixer
+7-Up,Lemonade,Mixer
 Absinthe,Absinthe,Spirit
 Absolut Citron,Lemon Vodka,Spirit
 Absolut Vodka,Vodka,Spirit
@@ -143,3 +143,18 @@ Wild Turkey,Bourbon,Spirit
 Wine,White Wine,Wine
 Worcestershire Sauce,Worcester Sauce,Spice
 Yoghurt,Yoghurt,Other
+Drambuie,Drambuie,Liqueur
+Blended Scotch,Whisky,Spirit
+Sloe Gin,Sloe Gin,Liqueur
+Rosemary,Rosemary,Spice
+Cherry Liqueur,Cherry Liqueur,Liqueur
+Jägermeister,Jägermeister,Liqueur
+Aperol,Aperol,Liqueur
+Kiwi,Kiwi,Fruit
+Cumin Seed,Cumin,Spice
+Mezcal,Mezcal,Spirit
+Ouzo,Anise,Spirit
+Lime Juice Cordial,Lime Cordial,Syrup
+Anis,Anise,Spirit
+,,
+,,

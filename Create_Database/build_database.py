@@ -153,6 +153,7 @@ def get_cocktails():
                         "Everclear",
                         "Vanilla Vodka",
                         "Pepsi Cola",
+                        "Fresca",
                         "Chocolate Milk",
                         "Pisang Ambon",
                         "Peach Bitters",
@@ -383,9 +384,10 @@ def main():
         print(
             "\n1. Get cocktails.csv \n2. Write cocktails to database \n3. Check ingredients \n4. Write ingredients to database\n"
         )
-        choice = input("Enter 1, 2, 3 or 4:")
+        choice = input("Enter 1, 2, 3 or 4: ")
         if choice == "1":
             get_cocktails()
+            print("\n Don't forget to clean up cocktails.csv before proceeding")
         elif choice == "2":
             write_cocktails()
         elif choice == "3":
