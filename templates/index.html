@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <title>hello</title>
+    </head>
+    <body>
+        
+        <input autocomplete="off" autofocus placeholder="Search" type="search">
+        
+        <ul></ul>
+        
+        <script>
+      
+            let input = document.querySelector('input');
+            input.addEventListener('input', async function() {
+                let response = await fetch('/search?q=' + input.value);
+                let cocktails = await response.text();
+                document.querySelector('ul').innerHTML = cocktails;
+            });
+
+        </script>
+        
+    </body>
+</html>
+
+
