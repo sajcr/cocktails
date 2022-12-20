@@ -301,7 +301,7 @@ def write_cocktails():
 
     # initiate table
     conn.execute(
-        "CREATE TABLE if not exists cocktails (idDrink INT PRIMARY KEY,strDrink,strCategory,strIBA,strAlcoholic,strGlass,strIngredient1,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15,strMeasure1,strMeasure2,strMeasure3,strMeasure4,strMeasure5,strMeasure6,strMeasure7,strMeasure8,strMeasure9,strMeasure10,strMeasure11,strMeasure12,strMeasure13,strMeasure14,strMeasure15,strInstructions)"
+        "CREATE TABLE if not exists cocktails (idDrink INT PRIMARY KEY,strDrink,strCategory,strIBA,strAlcoholic,strGlass,strIngredient1,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15,strMeasure1,strMeasure2,strMeasure3,strMeasure4,strMeasure5,strMeasure6,strMeasure7,strMeasure8,strMeasure9,strMeasure10,strMeasure11,strMeasure12,strMeasure13,strMeasure14,strMeasure15,strInstructions,numIngredients)"
     )
 
     # write data
@@ -388,31 +388,51 @@ def add_recipies():
   
   for drink_id in drink_ids:
     
+    #amend drink id for use wuth get_drink() and request data from cocktaildb
     request = drink_id['idDrink'] - 11000
-    
     cocktail = get_drink(request)
     
+    #extract instructions from request
     strInstructions = (cocktail['drinks'][0]['strInstructions'])
     
-#    print(strInstructions)
+    #update database with instructions
     db.execute("UPDATE cocktails SET strInstructions = ? WHERE idDrink = ?", strInstructions, drink_id['idDrink'])
+
+
+
+def add_number_ingredients():
+  db = SQL("sqlite:///../cocktails.db")
+  
+  #get relevant data from db
+  drinks = db.execute("SELECT idDrink,strIngredient1,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15 FROM cocktails") 
+  
+  #for each drink count the number of ingredients
+  for drink in drinks:
     
+    count = 0
+    for n in range(15):
+      ingredient = drink[f"strIngredient{n+1}"]
+      
+      if ingredient == "None":
+        pass
+      else:
+        count += 1
     
-    
-    
-    
-    
+    #add the ingredients number into the db
+    db.execute("UPDATE cocktails SET numIngredients = ? WHERE idDrink = ?", count, drink['idDrink']) 
+    print(f"{drink['idDrink']} - {count}")
+        
+      
     
   
 
     
-
 def main():
     while True:
         print(
-            "\n1. Get cocktails.csv \n2. Write cocktails to database \n3. Check ingredients \n4. Write ingredients to database\n5. Add recipies to database\n"
+            "\n1. Get cocktails.csv \n2. Write cocktails to database \n3. Check ingredients \n4. Write ingredients to database\n5. Add recipies to database\n6. Add number of ingredients to database"
         )
-        choice = input("Enter 1, 2, 3, 4 or 5: ")
+        choice = input("Enter 1, 2, 3, 4, 5 or 6: ")
         if choice == "1":
             get_cocktails()
             print("\n Don't forget to clean up cocktails.csv before proceeding")
@@ -424,6 +444,8 @@ def main():
             write_ingredients()
         elif choice == "5":
             add_recipies()
+        elif choice == "6":
+          add_number_ingredients()
         else:
             pass
 

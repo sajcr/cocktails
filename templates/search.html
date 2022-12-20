@@ -1,5 +1,7 @@
 
 {% for cocktail in cocktails %}
-    <li>{{ cocktail['strDrink'] }}</li>
+    <li> 
+      <a href="/?idDrink={{ cocktail['idDrink'] }}">{{ cocktail['strDrink'] }}</a> 
+    </li>
 {% endfor %}
 
