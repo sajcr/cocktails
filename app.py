@@ -13,6 +13,8 @@ def index():
   
   cocktails = db.execute("SELECT idDrink, strDrink FROM cocktails")
   
+
+  
   if request.args.get("idDrink"):
     idDrink = request.args.get("idDrink")
     
@@ -31,7 +33,9 @@ def index():
     
     
     
-  return render_template("index.html", cocktails=cocktails, drink=drink, ingredients=ingredients)
+    return render_template("index.html", cocktails=cocktails, drink=drink, ingredients=ingredients)
+    
+
 
 
 """

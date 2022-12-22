@@ -4,9 +4,9 @@
 
 {% block drinks %}
 
-  <input id="myInput" type="text" onkeyup="myFunction()" placeholder="Search">
+  <input class="position-fixed" id="myInput" type="text" onkeyup="myFunction()" placeholder="Search">
 
-  <ul id="cocktails">
+  <ul class="overflow-auto"  id="cocktails">
   {% for cocktail in cocktails %}
       <li> 
         <a href="/?idDrink={{ cocktail['idDrink'] }}">{{ cocktail['strDrink'] }}</a> 
