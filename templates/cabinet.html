@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+
+
+{% block left %}
+
+<form action="/cabinet" method="post">
+  <input type="submit" value="Update"><br>
+
+
+{% for category in categories %}
+
+
+  <p>{{category}}</p>
+
+
+{% endfor %}
+{% endblock %}
+
+{% block right %}
+
+
+
+
+{% for entry in entries %}
+
+{% set item = entry['item'] %}
+{% set status = entry['status'] %}
+
+  <input class="form-check-input" type="checkbox" name="check" value="{{item}}" {{status}}>
+  <label class="form-check-label" for="{{entry}}">{{item}}</label><br>
+
+
+{% endfor %}
+  
+</form>
+
+
+
+
+  
+{% endblock %}

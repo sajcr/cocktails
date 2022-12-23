@@ -378,6 +378,7 @@ def write_ingredients():
     # write data
     df = pandas.read_csv("ingredients.csv")
     df.to_sql("ingredients", conn, if_exists="append", index=False)
+
     
 
 def add_recipies():
