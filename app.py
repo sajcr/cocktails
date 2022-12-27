@@ -29,7 +29,7 @@ class Book:
   def add(self, entries):
     for entry in entries:
       self.contents.append(entry.name)
-      self.index.update({entry.id:entry})
+      self.index.update({entry.id : entry})
       
   
 
@@ -61,19 +61,19 @@ class Cocktail:
     return self.name  
   
   """ optionally takes ingredients held returns a tuple with two ingredient lists: ( ( have, have,... ) , ( lack, lack ... ) ) """
-  def availability(self, ingredients = []):
+  def unavailable(self, ingredients = []):
   
-    availability = ([],[])
+    unavailable = []
     #incremenet down the variable for each ingredient that is in the provided list
     
     for ingredient in self.ingredients:
       if ingredient in ingredients:
-        availability[0].append(ingredient)
+        pass
       else:
-        availability[1].append(ingredient)
+        unavailable.append(ingredient)
         
     #return the variable as an indication of missing ingredients
-    return availability
+    return unavailable
     
 
 class Cabinet:
@@ -141,6 +141,16 @@ def convert_items(items):
 
 
 
+book = Book()
+
+idDrinks = db.execute("SELECT idDrink FROM cocktails")
+for idDrink in idDrinks:
+  cocktail = Cocktail(idDrink['idDrink'])
+  book.add([cocktail])
+
+
+drinks_cabinet = Cabinet()
+
 
 
 
@@ -148,57 +158,33 @@ def convert_items(items):
 """the cocktails section of website """
 @app.route("/", methods=["GET", "POST"])
 def index():
-    #iinitialise the cabinet.  Could this be outside of the function as a global variable?
-    cabinet = Cabinet()
+
+
     #obtain a list of items in the cabinet
-    items = cabinet.have()
-    #create a list of ingredients
+    items = drinks_cabinet.have()
+    #convert to a list of ingredients
     items = convert_items(items)
 
-    #query database for cocktails details
-    entries = db.execute(
-        "SELECT idDrink, strDrink, strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5, strIngredient6, strIngredient7, strIngredient8, strIngredient9, strIngredient10, strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15 FROM cocktails"
-    )
-    
-    #compile a list of cocktails, adding only if all ingredients are included int he items list
-    #NOTE: this conflates items and ingredients!
-    
+   
+    #compile a list of cocktails for which we have ingredients, for passing to render_template()    
     cocktails = []
-    for entry in entries:
-      #assume that the entry will be added
-      add = True
-      for n in range(15):
-        #refute assumption if any of the ingredient fields are not in the items list, or are not none
-        if entry[f"strIngredient{n+1}"] in items:
-          pass
-        elif entry[f"strIngredient{n+1}"] == "None":
-          pass
-        else:
-          add = False  
-      if add == True:
+    for entry in book:
+      if entry.unavailable(items):
+        pass
+      else:
         cocktails.append(entry)
-    print(len(cocktails))
+      
     
-    #if url has requested details on drink by including drink id get those details only
+    #if url has requested details return that specific drink
     if request.args.get("idDrink"):
-        idDrink = request.args.get("idDrink")
-        drink = db.execute("SELECT * FROM cocktails WHERE idDrink = ?", idDrink)[0]
-    #THIS else is WRONG at the moment it is getting all drink details, returnign only that of the 
-    #first entry (via the [0])  could it just be pass?  or should it details to make a holding page?""" 
+        idDrink = int(request.args.get("idDrink"))
+
+        drink = book.index[idDrink]
     else:
-        drink = db.execute("SELECT * FROM cocktails")[0]
+        drink = None
         
-    #compile a list of the ingredients and measures to pass to render template
-    ingredients = []
-    for n in range(drink["numIngredients"]):
-        item = {
-            "ingredient": drink[f"strIngredient{n+1}"],
-            "measure": drink[f"strMeasure{n+1}"],
-        }
-        ingredients.append(item)
-    
     return render_template(
-        "cocktails.html", cocktails=cocktails, drink=drink, ingredients=ingredients
+        "cocktails.html", cocktails=cocktails, drink=drink
     )
 
 

@@ -10,10 +10,9 @@
 
   <ul class="overflow-auto"  id="cocktails">
   {% for cocktail in cocktails %}
-  {% set id = cocktail['idDrink'] %}
-  {% set cocktail = cocktail['strDrink'] %}
-      <li id="{{id}}">
-        <a href="/?idDrink={{id}}">{{cocktail}}</a> 
+
+      <li id="{{cocktail.id}}">
+        <a href="/?idDrink={{cocktail.id}}">{{cocktail.name}}</a> 
       </li>
   {% endfor %}
   </ul>
@@ -50,15 +49,15 @@ function myFunction() {
 
 {% block right %}
 
-  <h1>{{drink['strDrink']}}</h1>
+  <h1>{{drink.name}}</h1>
   
-  {% for ingredient in ingredients %}
+  {% for n in range(drink.ingredients|length) %}
     
-  <p>{{ ingredient['measure']}} - {{ ingredient['ingredient'] }}  </p>
+  <p>{{ drink.measures[n]}} - {{ drink.ingredients[n] }}  </p>
     
   {% endfor %}
   
-  <p> {{ drink['strInstructions'] }} </p>
+  <p> {{ drink.instructions }} </p>
   
 
   
