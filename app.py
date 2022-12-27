@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import sqlite3
 from cs50 import SQL
 
-"""Be aware fo the difference between ingredients (as understood by the coctail recipies),
+"""Be aware fo the difference between ingredients (as understood by the cocktail recipies),
 and items (as understood by the cabinet)"""
 
 
@@ -13,9 +13,28 @@ app = Flask(__name__)
 db = SQL("sqlite:///data/cocktails.db")
 
 
-""" Not sure this class actually adds anything. Unclear on how to use, would involve creating for every entry in the database?
-Probably better to ditch it and just query the database whenever need information (perhpas restructure the database to assist?), 
-and implement the availability function differently """
+class Book:
+  def __init__(self):
+    #a list of the names of all entries
+    self.contents = []
+    #an index of entry.id : entry
+    self.index = {}
+  
+  #make iterable accross the index of cocktails  
+  def __iter__(self):
+    for entry in self.index:
+      yield self.index[entry]
+  
+  #enables addition of cocktails     
+  def add(self, entries):
+    for entry in entries:
+      self.contents.append(entry.name)
+      self.index.update({entry.id:entry})
+      
+  
+
+
+""" will want to define a p[arent class and redfine this as a child, eventually """
 class Cocktail:
   def __init__(self, drink_id):
     
@@ -31,27 +50,30 @@ class Cocktail:
     
     #compile list of dictionaries with ingredient and measure, then assign
     ingredients = []
+    measures = []
     for n in range(db_entry['numIngredients']):
-        item = {
-            "ingredient": db_entry[f'strIngredient{n+1}'],
-            "measure": db_entry[f'strMeasure{n+1}'],
-        }
-        ingredients.append(item)
-    self.ingredients = ingredients
-    
-  """ takes list items held, returns number of required ingredients missing 
-  does this appreciate the difference between ingredients and items???"""
-  def availability(self, items):
-    #start with a variable initialised to the total number of ingredients
-    index = len(self.ingredients)
+        ingredients.append(db_entry[f'strIngredient{n+1}'])
+        measures.append(db_entry[f'strMeasure{n+1}'])
+    self.ingredients = tuple(ingredients)
+    self.measures = tuple(measures)
+  
+  def __repr__(self):
+    return self.name  
+  
+  """ optionally takes ingredients held returns a tuple with two ingredient lists: ( ( have, have,... ) , ( lack, lack ... ) ) """
+  def availability(self, ingredients = []):
+  
+    availability = ([],[])
     #incremenet down the variable for each ingredient that is in the provided list
+    
     for ingredient in self.ingredients:
-      if ingredient['ingredient'] in items:
-        index -= 1
+      if ingredient in ingredients:
+        availability[0].append(ingredient)
       else:
-        pass
+        availability[1].append(ingredient)
+        
     #return the variable as an indication of missing ingredients
-    return index
+    return availability
     
 
 class Cabinet:
@@ -87,9 +109,37 @@ class Cabinet:
       if not entry['have']:
         lack.append(entry)
     return lack
+
+
+""" takes an ingredient, or list of ingredients, returns as a set of items """
+def convert_ingredients(ingredients):
+  # if received a single ingredient as a str, change this for a list with single ingredient duplicated
+  if type(ingredients) == str:
+    ingredients = list([ingredients, ingredients])
+  items = set()
+  #look up each ingredient in db and obtain corresponding item
+  for ingredient in ingredients:
+    db_entry = db.execute("SELECT item FROM ingredients WHERE ingredient = ?", ingredient)
+    items.add(db_entry[0]['item'])
+  return(items)
+  
+  
+""" takes an item, or list of items, returns as a set of ingredients """
+def convert_items(items):
+    # if received a single item as a str, change this for a list with single item duplicated
+  if type(items) != list:
+    items = list([items, items])
+  ingredients = set()
+  #look up each item in db and obtain corresponding ingredient
+  for item in items:
+    db_entry = db.execute("SELECT ingredient FROM ingredients WHERE item = ?", item)
+    for field in db_entry:
+      ingredients.add(field['ingredient'])
+  return(ingredients)
+
     
-    
-  #Need to write a 'have' and 'lack' that return ingredients not items?
+
+
 
 
 
@@ -102,6 +152,8 @@ def index():
     cabinet = Cabinet()
     #obtain a list of items in the cabinet
     items = cabinet.have()
+    #create a list of ingredients
+    items = convert_items(items)
 
     #query database for cocktails details
     entries = db.execute(
@@ -110,6 +162,7 @@ def index():
     
     #compile a list of cocktails, adding only if all ingredients are included int he items list
     #NOTE: this conflates items and ingredients!
+    
     cocktails = []
     for entry in entries:
       #assume that the entry will be added
@@ -124,6 +177,7 @@ def index():
           add = False  
       if add == True:
         cocktails.append(entry)
+    print(len(cocktails))
     
     #if url has requested details on drink by including drink id get those details only
     if request.args.get("idDrink"):
@@ -190,3 +244,6 @@ def cabinet():
     list(categories).sort()
 
     return render_template("cabinet.html", entries=entries, categories=categories)
+    
+    
+    
