@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import sqlite3
 from cs50 import SQL
+import json
 
 """Be aware fo the difference between ingredients (as understood by the cocktail recipies),
 and items (as understood by the cabinet)"""
@@ -56,6 +57,15 @@ class Cocktail:
         measures.append(db_entry[f'strMeasure{n+1}'])
     self.ingredients = tuple(ingredients)
     self.measures = tuple(measures)
+    
+    self.json = json.dumps({"id": self.id,
+                            "name":self.name,
+                            "ingredients": self.ingredients,
+                            "measures": self.measures,
+                            "instructions":self.instructions,
+                            "glass":self.glass,
+                            "category":self.category,})
+                  
   
   def __repr__(self):
     return self.name  
@@ -77,7 +87,7 @@ class Cocktail:
     
 
 class Cabinet:
-  def __init__(self):
+  def refresh(self):
     """ state of cabinet as a dictionary of format - { item : { 'category' : category, 'have' : have } , .. } """
     request_1 = db.execute("SELECT item, category, have FROM ingredients")
     items = {}
@@ -93,6 +103,9 @@ class Cabinet:
     for item in items.keys():
       categories[items[item]['category']].append(item)
     self.categories = categories
+
+  def __init__(self):
+    self.refresh()    
   
   """ returns a list of items held """
   def have(self):
@@ -106,7 +119,7 @@ class Cabinet:
   def lack(self):
     lack = []
     for entry in self.items:
-      if not entry['have']:
+      if not self.items[entry]['have']:
         lack.append(entry)
     return lack
 
@@ -152,14 +165,29 @@ for idDrink in idDrinks:
 drinks_cabinet = Cabinet()
 
 
+@app.route("/drink")
+def provide():
+    if request.args.get("id"):
+        idDrink = int(request.args.get("id"))
+        
+        drink = book.index[idDrink].json
+        return drink
 
+    else:
+        return 
+    
+    
 
 
 """the cocktails section of website """
 @app.route("/", methods=["GET", "POST"])
 def index():
+    
+    
+    #refresh the drinks cabinet to reflect any changes to inventory
+    drinks_cabinet.refresh()
 
-
+    
     #obtain a list of items in the cabinet
     items = drinks_cabinet.have()
     #convert to a list of ingredients
@@ -173,16 +201,18 @@ def index():
         pass
       else:
         cocktails.append(entry)
-      
+
     
     #if url has requested details return that specific drink
     if request.args.get("idDrink"):
         idDrink = int(request.args.get("idDrink"))
-
+        
         drink = book.index[idDrink]
     else:
         drink = None
-        
+
+
+
     return render_template(
         "cocktails.html", cocktails=cocktails, drink=drink
     )
@@ -208,6 +238,12 @@ def cabinet():
     )
 
     entries = []
+    
+    
+    #refresh the drinks cabinet to reflect any changes to inventory
+    drinks_cabinet.refresh()
+    
+    """
     # declare categories set to obtain unique values
     categories = []
     for item in items:
@@ -228,8 +264,10 @@ def cabinet():
     # convert categories set back to an ordered list
     categories = set(categories)
     list(categories).sort()
-
-    return render_template("cabinet.html", entries=entries, categories=categories)
+    """
+    
+    
+    return render_template("cabinet.html", drinks_cabinet=srinks_cabinet)
     
     
     

@@ -1,26 +1,28 @@
 {% extends "layout.html" %}
 
 
-
-{% block left %}
-
-<!--
-  <input class="position-fixed" id="myInput" type="text" onkeyup="myFunction()" placeholder="Search">
--->
-
-  <ul class="overflow-auto"  id="cocktails">
-  {% for cocktail in cocktails %}
-
-      <li id="{{cocktail.id}}">
-        <a href="/?idDrink={{cocktail.id}}">{{cocktail.name}}</a> 
-      </li>
-  {% endfor %}
-  </ul>
-
-<!--
+{% block script %}
 
 <script>
-function myFunction() {
+async function addRecipie(number) {
+  
+  let response = await fetch('/drink?id=' + number);
+  let drink = await response.json();
+  document.getElementById("drinkname").innerHTML = drink["name"];   
+  document.getElementById("glass").innerHTML = drink["glass"]; 
+  ingredients = ""
+  for (let i = 0; i < drink["ingredients"].length; i++) {
+    ingredients = ingredients + ((drink["measures"][i] + " " + drink["ingredients"][i].trim() + "<br>").replace("  ", " ").replace("null ", "").replace("None ", ""))
+    }
+  document.getElementById("ingredients").innerHTML = ingredients; 
+
+  document.getElementById("instructions").innerHTML = drink["instructions"]; 
+  }
+
+</script>
+
+<script>
+function filter() {
   // Declare variables
   var input, filter, ul, li, a, i, txtValue;
   input = document.getElementById('myInput');
@@ -30,7 +32,8 @@ function myFunction() {
 
   // Loop through all list items, and hide those who don't match the search query
   for (i = 0; i < li.length; i++) {
-    a = li[i].getElementsByTagName("a")[0];
+    a = li[i].getElementsByTagName("div")[0];
+    console.log(a);
     txtValue = a.textContent || a.innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
       li[i].style.display = "";
@@ -41,7 +44,23 @@ function myFunction() {
 }
 </script>
 
--->
+{% endblock %}
+
+
+
+{% block left %}
+
+  <input class="position-fixed" id="myInput" type="text" onkeyup="filter()" placeholder="Search">
+
+  <ul class="overflow-auto"  id="cocktails">
+  
+  {% for cocktail in cocktails %}
+      <li>
+        <div onclick="addRecipie('{{cocktail.id}}')">{{cocktail.name}}<br></div>
+      </li>
+  {% endfor %}
+  
+  </ul>
 
 {% endblock %}
 
@@ -49,16 +68,22 @@ function myFunction() {
 
 {% block right %}
 
-  <h1>{{drink.name}}</h1>
-  
-  {% for n in range(drink.ingredients|length) %}
-    
-  <p>{{ drink.measures[n]}} - {{ drink.ingredients[n] }}  </p>
-    
-  {% endfor %}
-  
-  <p> {{ drink.instructions }} </p>
-  
+<div id="drink">
 
+  <h1 id="drinkname"></h1>
   
+  <p id="glass"><p>
+   
+  <p id="ingredients"><p>
+    
+  <p id="instructions"></p>
+
+</div>
+ 
 {% endblock %}
+
+
+
+
+
+
