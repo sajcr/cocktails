@@ -1,42 +1,99 @@
 {% extends "layout.html" %}
 
 
+{% block script %}
+
+
+
+<script>
+function toggleView(items, target) {
+  var items = document.getElementsByClassName(items)
+  var target = target;
+  for (item of items) {
+    if (item.classList.contains(target)) {
+          // Hide each element by class
+      item.style.display = "";
+    } else {
+      item.style.display = "none"
+    }
+  }
+}
+
+// check all visible checkboxes
+function checkAll() {
+  // get all elements named 'check'
+  checkboxes = document.getElementsByName('check');
+  // iterate through, checking if they are displayed, if so set to checked
+  for (var i=0; i < checkboxes.length; i++) {
+    if (checkboxes[i].style.display == "none") {
+    }
+    else {
+      checkboxes[i].checked = true;
+    }
+  }
+}
+
+// uncheck all visible checkboxes
+function uncheckAll() {
+  // get all elements named 'check'
+  checkboxes = document.getElementsByName('check');
+  // terate through, checking if they are displayed, if so set to unchecked
+  for (var i=0; i < checkboxes.length; i++) {
+    if (checkboxes[i].style.display == "none") {
+    }
+    else {
+      checkboxes[i].checked = false;
+    }
+  }
+}
+</script>
+
+{% endblock %}
+
 
 {% block left %}
 
 <form action="/cabinet" method="post">
-  <input type="submit" value="Update"><br>
+  <input type="submit" value="Update Cabinet"><br>
+
+  <ul class="overflow-auto" id="cocktails">
+
+    <li>
+      <div onclick="toggleView('item', 'item')">All<br><br> </div>
+
+    {% for category in drinks_cabinet.categories %}
 
 
-{% for category in categories %}
+    <li>
+      <div onclick="toggleView('item', '{{category}}')">{{category}}<br></div>
+    </li>
 
 
-  <p>{{category}}</p>
-
-
-{% endfor %}
-{% endblock %}
-
-{% block right %}
-
-
-
-
-{% for entry in entries %}
-
-{% set item = entry['item'] %}
-{% set status = entry['status'] %}
-
-  <input class="form-check-input" type="checkbox" name="check" value="{{item}}" {{status}}>
-  <label class="form-check-label" for="{{entry}}">{{item}}</label><br>
-
-
-{% endfor %}
+  {% endfor %}
   
+  {% endblock %}
+
+
+  {% block right %}
+ <button type="button" onclick="checkAll()">all</button> 
+ <button type="button" onclick="uncheckAll()">none</button> 
+ 
+
+  {% for item in drinks_cabinet.items %}
+    {% set category = drinks_cabinet.items[item]['category'] %}
+    
+    {% set status = "" %}
+    {% if drinks_cabinet.items[item]['have'] %}
+      {% set status = "checked" %}
+    {% endif %}
+  
+  <div class="item {{category}}">
+    <input class="item {{category}} form-check-input" type="checkbox" name="check" value="{{item}}" {{status}}>
+    <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label><br>
+  </div>
+
+{% endfor %}
+
 </form>
-
-
-
-
   
 {% endblock %}

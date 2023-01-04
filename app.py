@@ -218,6 +218,7 @@ def index():
     )
 
 
+
 """ the cabinet section of website """
 @app.route("/cabinet", methods=["GET", "POST"])
 def cabinet():
@@ -267,7 +268,7 @@ def cabinet():
     """
     
     
-    return render_template("cabinet.html", drinks_cabinet=srinks_cabinet)
+    return render_template("cabinet.html", drinks_cabinet=drinks_cabinet)
     
     
     
