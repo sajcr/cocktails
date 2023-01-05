@@ -89,14 +89,14 @@ class Cocktail:
 class Cabinet:
   def refresh(self):
     """ state of cabinet as a dictionary of format - { item : { 'category' : category, 'have' : have } , .. } """
-    request_1 = db.execute("SELECT item, category, have FROM ingredients")
+    request_1 = db.execute("SELECT item, category, have FROM ingredients ORDER BY item")
     items = {}
     for row in request_1:
       items.update({row['item'] : {'category' : row['category'],'have' : row['have']}})
     self.items = items
     
     """ categorisation of items as a dictionary of format { category : [ item, item, item ...] , .. } """
-    request_2 = db.execute("SELECT DISTINCT category FROM ingredients")    
+    request_2 = db.execute("SELECT DISTINCT category FROM ingredients ORDER BY category")    
     categories = {}
     for row in request_2:
       categories.update({row['category']:[]})
@@ -200,7 +200,10 @@ def index():
         missing = entry.availability(items)
         number_missing = len(missing)
         cocktails.append({"id":entry.id, "name":entry.name, "number_missing":number_missing, "missing":missing})
-
+    
+    #sort list of dictionaries by cocktail name
+    cocktails = sorted(cocktails, key = lambda entry: entry["name"])
+    print(cocktails)
     
     #if url has requested details return that specific drink
     if request.args.get("idDrink"):
@@ -211,7 +214,8 @@ def index():
         drink = None
 
 
-    print(cocktails)
+
+
     return render_template(
         "cocktails.html", cocktails=cocktails, drink=drink
     )
@@ -243,28 +247,6 @@ def cabinet():
     #refresh the drinks cabinet to reflect any changes to inventory
     drinks_cabinet.refresh()
     
-    """
-    # declare categories set to obtain unique values
-    categories = []
-    for item in items:
-
-        entry = item["item"]
-        category = item["category"]
-
-        if item["have"]:
-            status = "checked"
-        else:
-            status = "unchecked"
-
-        entries.append({"item": entry, "category": category, "status": status})
-
-        # add category to set
-        categories.append(category)
-
-    # convert categories set back to an ordered list
-    categories = set(categories)
-    list(categories).sort()
-    """
     
     
     return render_template("cabinet.html", drinks_cabinet=drinks_cabinet)

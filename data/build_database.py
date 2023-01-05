@@ -70,18 +70,18 @@ def get_cocktails():
             "strMeasure15",
         ]
 
-        # writes header row to csv with chosen fields
+        # writes header row to csv with chosen fields, dealign with the last seperately to avoid a final comma
         for m in range(len(fields) - 1):
 
             file.write(f"{fields[m]},")
 
         file.write(f"strMeasure15\n")
-        # file.write(f"\n")
+
 
         # iterate through drink ids submitting each as a request for data
         for n in range(7842):
 
-            # print number of request to stout to indicate progress
+            # print number of request to st-out to indicate progress
             print(n, end="")
 
             # try this each time as some drink ids return nothing
