@@ -186,8 +186,6 @@ def provide():
                     "category":drink.category,
                     "missing":missing})
         
-        print(data)
-        
         return data
 
     else:

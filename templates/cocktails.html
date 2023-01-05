@@ -8,6 +8,7 @@ async function addRecipie(number) {
   var addition
   let response = await fetch('/drink?id=' + number);
   let drink = await response.json();
+  document.getElementById("ingredients").innerHTML = null
   document.getElementById("drinkname").innerHTML = drink["name"];   
   document.getElementById("glass").innerHTML = drink["glass"]; 
 
@@ -28,7 +29,7 @@ async function addRecipie(number) {
   var lacks = document.getElementsByClassName("ingredients_lack")
   for  (i = 0; i <lacks.length; i++) {
         console.log(lacks[i])
-        lacks[i].style.fontWeight = "200";
+        lacks[i].style.fontWeight = "lighter";
   }
 }
 
@@ -66,7 +67,7 @@ function refreshCocktails() {
       li[i].style.fontWeight = "400";
     //if acceptable number missing display at light text weight
     } else if (missing <= index) {
-      li[i].style.fontWeight = "300";
+      li[i].style.fontWeight = "lighter";
     //otherwise, if unacceptable number missing, hide
     } else {
       li[i].style.display = "none";
@@ -91,7 +92,7 @@ function refreshCocktails() {
     <span>Missing ingredients:</span>
     <span id="f"></span>
     <br>
-    <input type="range" min="0" max="9" value="0" class="slider" id="myRange" onclick="refreshCocktails()">
+    <input type="range" min="0" max="9" value="0" class="slider" id="myRange" onpointerup="refreshCocktails()">
   </div>
   <div class="search">
     <input id="text_filter" type="text" onkeyup="refreshCocktails()" placeholder="Search">
