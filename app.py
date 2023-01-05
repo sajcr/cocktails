@@ -71,19 +71,19 @@ class Cocktail:
     return self.name  
   
   """ optionally takes ingredients held returns a tuple with two ingredient lists: ( ( have, have,... ) , ( lack, lack ... ) ) """
-  def unavailable(self, ingredients = []):
+  def availability(self, ingredients = []):
   
-    unavailable = []
+    availability = []
     #incremenet down the variable for each ingredient that is in the provided list
     
     for ingredient in self.ingredients:
       if ingredient in ingredients:
         pass
       else:
-        unavailable.append(ingredient)
+        availability.append(ingredient)
         
     #return the variable as an indication of missing ingredients
-    return unavailable
+    return availability
     
 
 class Cabinet:
@@ -197,10 +197,9 @@ def index():
     #compile a list of cocktails for which we have ingredients, for passing to render_template()    
     cocktails = []
     for entry in book:
-      if entry.unavailable(items):
-        pass
-      else:
-        cocktails.append(entry)
+        missing = entry.availability(items)
+        number_missing = len(missing)
+        cocktails.append({"id":entry.id, "name":entry.name, "number_missing":number_missing, "missing":missing})
 
     
     #if url has requested details return that specific drink
@@ -212,7 +211,7 @@ def index():
         drink = None
 
 
-
+    print(cocktails)
     return render_template(
         "cocktails.html", cocktails=cocktails, drink=drink
     )

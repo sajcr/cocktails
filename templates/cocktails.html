@@ -33,7 +33,6 @@ function filter() {
   // Loop through all list items, and hide those who don't match the search query
   for (i = 0; i < li.length; i++) {
     a = li[i].getElementsByTagName("div")[0];
-    console.log(a);
     txtValue = a.textContent || a.innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
       li[i].style.display = "";
@@ -42,6 +41,57 @@ function filter() {
     }
   }
 }
+
+function hideCocktails() {
+  var index = document.getElementById("myRange").value
+
+    // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = "";
+  filter = input.toUpperCase();
+  ul = document.getElementById("cocktails");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("div")[0];
+    missing = a.attributes.missing.textContent
+    
+    if (missing <= index) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+
+function showCocktails() {
+  var input, filter, ul, li, a, i, txtValue;
+  ul = document.getElementById("cocktails");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    li[i].style.display = "";
+
+  }
+}
+
+
+function useCabinet() {
+  var checkbox = document.getElementById("useCabinet");
+  var text = document.getElementById("text")
+  var selector = document.getElementById("selector")
+  
+  if (checkbox.checked == true){
+    selector.style.visibility = "";
+    hideCocktails()
+  } else {
+    selector.style.visibility = "hidden";
+    showCocktails()
+  }
+}
+
 </script>
 
 {% endblock %}
@@ -50,18 +100,37 @@ function filter() {
 
 {% block left %}
 
-  <input class="position-fixed" id="myInput" type="text" onkeyup="filter()" placeholder="Search">
+  <div id="selector" class="slidecontainer">
 
+
+
+    <span>Number of missing items:</span>
+    <span id="f"></span>
+
+    <input type="range" min="0" max="9" value="1" class="slider" id="myRange" onclick="hideCocktails()">
+  </div>
+  <div class="search">
+    <input id="myInput" type="text" onkeyup="filter()" placeholder="Search">
+  </div>
+  
   <ul class="overflow-auto"  id="cocktails">
   
   {% for cocktail in cocktails %}
       <li>
-        <div onclick="addRecipie('{{cocktail.id}}')">{{cocktail.name}}<br></div>
+        <div missing="{{cocktail.number_missing}}" onclick="addRecipie('{{cocktail.id}}')">{{cocktail.name}} {{(cocktail.number_missing)}}<br></div>
       </li>
   {% endfor %}
   
   </ul>
+<script>var slider = document.getElementById("myRange");
+var output = document.getElementById("f");
+output.innerHTML = slider.value; // Display the default slider value
 
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+} 
+</script>
 {% endblock %}
 
 
