@@ -102,7 +102,7 @@ function refreshCocktails() {
   
   {% for cocktail in cocktails %}
       <li>
-        <div missing="{{cocktail.number_missing}}" onclick="addRecipie('{{cocktail.id}}')">{{cocktail.name}}<br></div>
+        <div missing="{{cocktail.number_missing}}" class="nav-link active" onclick="addRecipie('{{cocktail.id}}')">{{cocktail.name}}<br></div>
       </li>
   {% endfor %}
   
