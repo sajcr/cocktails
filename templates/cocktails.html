@@ -5,77 +5,75 @@
 
 <script>
 async function addRecipie(number) {
-  
+  var addition
   let response = await fetch('/drink?id=' + number);
   let drink = await response.json();
   document.getElementById("drinkname").innerHTML = drink["name"];   
   document.getElementById("glass").innerHTML = drink["glass"]; 
-  ingredients = ""
+
   for (let i = 0; i < drink["ingredients"].length; i++) {
-    ingredients = ingredients + ((drink["measures"][i] + " " + drink["ingredients"][i].trim() + "<br>").replace("  ", " ").replace("null ", "").replace("None ", ""))
+    var ingredient = ((drink["measures"][i] + " " + drink["ingredients"][i].trim() + "<br>").replace("  ", " ").replace("null ", "").replace("None ", ""))
+    if (drink["missing"].includes(drink["ingredients"][i])) { 
+    addition = `<div class="ingredients_lack">${ingredient}</div>`
     }
-  document.getElementById("ingredients").innerHTML = ingredients; 
-
-  document.getElementById("instructions").innerHTML = drink["instructions"]; 
+    else { 
+    addition = `<div class="ingredients_have">${ingredient}</div>`
+    }
+    document.getElementById("ingredients").innerHTML += addition
+    
+    
   }
-
-</script>
-
-<script>
-function filter() {
-  // Declare variables
-  var input, filter, ul, li, a, i, txtValue;
-  input = document.getElementById('myInput');
-  filter = input.value.toUpperCase();
-  ul = document.getElementById("cocktails");
-  li = ul.getElementsByTagName('li');
-
-  // Loop through all list items, and hide those who don't match the search query
-  for (i = 0; i < li.length; i++) {
-    a = li[i].getElementsByTagName("div")[0];
-    txtValue = a.textContent || a.innerText;
-    console.log(txtValue)
-    if (li[i].style.display = "none") {
-    } else {
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        li[i].style.display = "";
-      } else {
-        li[i].style.display = "none";
-    }
-  }
+  document.getElementById("instructions").innerHTML = drink["instructions"]; 
+  //where element is in ingredients_lack class, make dull
+  var lacks = document.getElementsByClassName("ingredients_lack")
+  for  (i = 0; i <lacks.length; i++) {
+        console.log(lacks[i])
+        lacks[i].style.fontWeight = "200";
+  }
 }
+
 </script>
 
 
 <script>
 
 function refreshCocktails() {
-  var index = document.getElementById("myRange").value
-
-    // Declare variables
-  var input, ul, li, a, i, txtValue;
+  // Declare variables
+  var input, ul, li, a, i, filter, txtValue, index;
+  // get acceptable missing number from slider
+  index = document.getElementById("myRange").value
+  //get the elements from html
   ul = document.getElementById("cocktails");
   li = ul.getElementsByTagName('li');
-
-  // Loop through all list items, and hide those who don't match the search query
+  // get the current textfilter value
+  input = document.getElementById('text_filter');
+  filter = input.value.toUpperCase();
+  // Loop through all list items
   for (i = 0; i < li.length; i++) {
+    //get individual list item
     a = li[i].getElementsByTagName("div")[0];
+    // extract tag stating number of missing
     missing = a.attributes.missing.textContent
-    
+    // and the text value
+    txtValue = a.textContent || a.innerText;
+    // hide all by default
+    li[i].style.display = "none"   
+    // show if meets the text filter
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";}  
+    //if no ingredients missing then display at normal text weight
     if (missing == 0){
-      console.log(li[i])
-      li[i].style.display = "";
       li[i].style.fontWeight = "400";
+    //if acceptable number missing display at light text weight
     } else if (missing <= index) {
-      li[i].style.display = "";
       li[i].style.fontWeight = "300";
+    //otherwise, if unacceptable number missing, hide
     } else {
       li[i].style.display = "none";
     }
-
   }
-  filter()
 }
+
 
 
 </script>
@@ -96,7 +94,7 @@ function refreshCocktails() {
     <input type="range" min="0" max="9" value="0" class="slider" id="myRange" onclick="refreshCocktails()">
   </div>
   <div class="search">
-    <input id="myInput" type="text" onkeyup="filter()" placeholder="Search">
+    <input id="text_filter" type="text" onkeyup="refreshCocktails()" placeholder="Search">
   </div>
   
   <ul class="overflow-auto"  id="cocktails">
@@ -108,6 +106,8 @@ function refreshCocktails() {
   {% endfor %}
   
   </ul>
+  
+  
 <script>var slider = document.getElementById("myRange");
 var output = document.getElementById("f");
 output.innerHTML = slider.value; // Display the default slider value

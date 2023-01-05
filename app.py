@@ -3,8 +3,7 @@ import sqlite3
 from cs50 import SQL
 import json
 
-"""Be aware fo the difference between ingredients (as understood by the cocktail recipies),
-and items (as understood by the cabinet)"""
+
 
 
 
@@ -170,8 +169,26 @@ def provide():
     if request.args.get("id"):
         idDrink = int(request.args.get("id"))
         
-        drink = book.index[idDrink].json
-        return drink
+        drink = book.index[idDrink]
+        
+        #establish ingredients held by converting current item list
+        haves = convert_items(drinks_cabinet.have())
+        
+        #establish missing items
+        missing = drink.availability(haves)
+                
+        data = json.dumps({"id": drink.id,
+                    "name":drink.name,
+                    "ingredients": drink.ingredients,
+                    "measures": drink.measures,
+                    "instructions":drink.instructions,
+                    "glass":drink.glass,
+                    "category":drink.category,
+                    "missing":missing})
+        
+        print(data)
+        
+        return data
 
     else:
         return 
@@ -203,18 +220,16 @@ def index():
     
     #sort list of dictionaries by cocktail name
     cocktails = sorted(cocktails, key = lambda entry: entry["name"])
-    print(cocktails)
     
     #if url has requested details return that specific drink
     if request.args.get("idDrink"):
+
         idDrink = int(request.args.get("idDrink"))
         
         drink = book.index[idDrink]
+        
     else:
         drink = None
-
-
-
 
     return render_template(
         "cocktails.html", cocktails=cocktails, drink=drink

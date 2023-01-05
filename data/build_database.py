@@ -297,7 +297,7 @@ def get_cocktails():
 def write_cocktails():
 
     # establish connection with database
-    conn = sqlite3.connect("../cocktails.db")
+    conn = sqlite3.connect("./cocktails.db")
 
     # initiate table
     conn.execute(
@@ -315,7 +315,7 @@ def write_cocktails():
 def check_ingredients():
 
     # establish database connection
-    conn = sqlite3.connect("../cocktails.db")
+    conn = sqlite3.connect("./cocktails.db")
     # get all ingredients in db
     data = conn.execute(
         "SELECT strIngredient1,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15 FROM cocktails;"
@@ -369,7 +369,7 @@ def check_ingredients():
 
 def write_ingredients():
     # establish connection with database
-    conn = sqlite3.connect("../cocktails.db")
+    conn = sqlite3.connect("./cocktails.db")
 
     # initiate table
     conn.execute(
@@ -382,7 +382,7 @@ def write_ingredients():
     
 
 def add_recipies():
-  db = SQL("sqlite:///../cocktails.db")
+  db = SQL("sqlite:///./cocktails.db")
 
   # initiate table
   drink_ids = db.execute("SELECT idDrink FROM cocktails") 
@@ -402,7 +402,7 @@ def add_recipies():
 
 
 def add_number_ingredients():
-  db = SQL("sqlite:///../cocktails.db")
+  db = SQL("sqlite:///./cocktails.db")
   
   #get relevant data from db
   drinks = db.execute("SELECT idDrink,strIngredient1,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15 FROM cocktails") 

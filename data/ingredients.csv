@@ -1,158 +1,158 @@
 ﻿ingredient,item,category
-7-Up,Lemonade,Mixer
-Absinthe,Absinthe,Spirit
-Absolut Citron,Lemon Vodka,Spirit
-Absolut Vodka,Vodka,Spirit
-Advocaat,Advocaat,Liqueur
-Allspice,Allspice,Spice
-Amaretto,Ameretto,Liqueur
+Brown Sugar,Brown Sugar,Other
+Demerara Sugar,Brown Sugar,Other
+Ice,Ice,Basic
+Pepper,Pepper,Other
+Salt,Salt,Basic
+Sugar,Sugar,Other
+Tea,Tea,Other
+Water,Water,Basic
 Angostura Bitters,Bitters,Bitter
-Anise,Anise,Spirit
-Anisette,Anise,Spirit
-Apple,Fruit,Fruit
-Apple Brandy,Apple Brandy,Spirit
-Apple Juice,Apple Juice,Juice
-Apricot Brandy,Apricot Brandy,Spirit
-Baileys Irish Cream,Irish Cream Liqueur,Liqueur
-Banana,Banana,Fruit
-Benedictine,Benedictine,Liqueur
 Bitters,Bitters,Bitter
-Blended Whiskey,Whisky,Spirit
-Blue Curacao,Blue Curacao,Syrup
-Bourbon,Bourbon,Spirit
-Brandy,Brandy,Spirit
-Brown Sugar,Brown Sugar,Assumed
-Cachaca,Cachaca,Spirit
-Campari,Campari,Liqueur
-Carbonated Water,Carbonated Water,Mixer
-Cardamom,Cardamom,Spice
-Cayenne Pepper,Cayenne Pepper,Spice
-Celery Salt,Celery Salt,Spice
-Chambord Raspberry Liqueur,Chambord,Liqueur
-Champagne,Sparkling Wine,Wine
+Orange Bitters,Orange Bitters,Bitter
+Port,Port,Fortified Wine
+Rosso Vermouth,Sweet Vermouth,Fortified Wine
+Sweet Vermouth,Sweet Vermouth,Fortified Wine
+Apple,Fruit,Fruit
+Banana,Banana,Fruit
 Cherry,Cherry,Fruit
-Cherry Brandy,Cherry Brandy,Spirit
-Cinnamon,Cinnamon,Spice
-Cloves,Cloves,Spice
-Club Soda,Club Soda,Mixer
-Coca-Cola,Cola,Mixer
-Cocoa Powder,Cocoa Powder,Other
-Coffee,Coffee,Other
-Coffee Liqueur,Coffee Liqueur,Liqueur
-Cognac,Brandy,Spirit
-Cointreau,Triple Sec,Liqueur
-Coriander,Coriander,Spice
+Fresh Lemon Juice,Lemon,Fruit
+Fresh Lime Juice,Lime,Fruit
+Lemon,Lemon,Fruit
+Lemon Peel,Lemon,Fruit
+Lime,Lime,Fruit
+Lime Peel,Lime,Fruit
+Maraschino Cherry,Maraschino Cherry,Fruit
+Orange,Orange,Fruit
+Orange Peel,Orange,Fruit
+Passion Fruit Juice,Passion Fruit,Fruit
+Pineapple,Pineapple,Fruit
+Strawberries,Strawberries,Fruit
+Kiwi,Kiwi,Fruit
+Apple Juice,Apple Juice,Juice
 Cranberry Juice,Cranberry Juice,Juice
-Cream,Cream,Other
+Grapefruit Juice,Grapefruit Juice,Juice
+Lemon Juice,Lemon Juice,Juice
+Lime Juice,Lime Juice,Juice
+Orange Juice,Orange Juice,Juice
+Pineapple Juice,Pineapple Juice,Juice
+Tomato Juice,Tomato Juice,Juice
+Advocaat,Advocaat,Liqueur
+Amaretto,Ameretto,Liqueur
+Baileys Irish Cream,Irish Cream Liqueur,Liqueur
+Benedictine,Benedictine,Liqueur
+Campari,Campari,Liqueur
+Chambord Raspberry Liqueur,Chambord,Liqueur
+Coffee Liqueur,Coffee Liqueur,Liqueur
+Cointreau,Triple Sec,Liqueur
 Creme De Cacao,Creme De Cacao,Liqueur
 Creme De Cassis,Creme De Cassis,Liqueur
 Creme De Mure,Creme De Mure,Liqueur
-Curacao,Blue Curacao,Syrup
-Dark Rum,Rum,Spirit
-Demerara Sugar,Brown Sugar,Assumed
-Dry Vermouth,Dry Vermouth,Wine
+Galliano,Galliano,Liqueur
+Grand Marnier,Grand Marnier,Liqueur
+Green Chartreuse,Green Chartreuse,Liqueur
+Green Creme De Menthe,Creme De Menthe,Liqueur
+Irish Cream,Irish Cream Liqueur,Liqueur
+Kahlua,Coffee Liqueur,Liqueur
+Malibu Rum,Malibu,Liqueur
+Peach Schnapps,Peach Schnapps,Liqueur
+Sambuca,Sambucca,Liqueur
+Southern Comfort,Southern Comfort,Liqueur
+Tia Maria,Coffee Liqueur,Liqueur
+Triple Sec,Triple Sec,Liqueur
+White Creme De Menthe,Creme De Menthe,Liqueur
+Drambuie,Drambuie,Liqueur
+Sloe Gin,Sloe Gin,Liqueur
+Cherry Liqueur,Cherry Liqueur,Liqueur
+Jägermeister,Jägermeister,Liqueur
+Aperol,Aperol,Liqueur
+7-Up,Lemonade,Mixer
+Carbonated Water,Carbonated Water,Mixer
+Club Soda,Club Soda,Mixer
+Coca-Cola,Cola,Mixer
+Ginger Ale,Ginger Ale,Mixer
+Ginger Beer,Ginger Beer,Mixer
+Lemonade,Lemonade,Mixer
+Soda Water,Soda Water,Mixer
+Sprite,Lemonade,Mixer
+Tonic Water,Tonic Water,Mixer
+Cocoa Powder,Cocoa Powder,Other
+Coffee,Coffee,Other
+Cream,Cream,Other
 Egg,Egg,Other
 Egg White,Egg,Other
 Egg Yolk,Egg,Other
 Espresso,Coffee,Other
-Fresh Lemon Juice,Lemon,Fruit
-Fresh Lime Juice,Lime,Fruit
-Galliano,Galliano,Liqueur
-Gin,Gin,Spirit
-Ginger,Ginger,Spice
-Ginger Ale,Ginger Ale,Mixer
-Ginger Beer,Ginger Beer,Mixer
-Grand Marnier,Grand Marnier,Liqueur
-Grapefruit Juice,Grapefruit Juice,Juice
-Green Chartreuse,Green Chartreuse,Liqueur
-Green Creme De Menthe,Creme De Menthe,Liqueur
-Grenadine,Grenadine,Syrup
 Heavy Cream,Cream,Other
 Honey,Honey,Other
-Ice,Ice,Assumed
-Irish Cream,Irish Cream Liqueur,Liqueur
+Light Cream,Cream,Other
+Milk,Milk,Other
+Olive,Olive,Other
+Powdered Sugar,Powdered Sugar,Other
+Tabasco Sauce,Tabasco,Other
+Whipped Cream,Cream,Other
+Whipping Cream,Cream,Other
+Yoghurt,Yoghurt,Other
+Allspice,Allspice,Spice
+Cardamom,Cardamom,Spice
+Cayenne Pepper,Cayenne Pepper,Spice
+Celery Salt,Celery Salt,Spice
+Cinnamon,Cinnamon,Spice
+Cloves,Cloves,Spice
+Coriander,Coriander,Spice
+Ginger,Ginger,Spice
+Mint,Mint,Spice
+Nutmeg,Nutmeg,Spice
+Vanilla Extract,Vanilla Extract,Spice
+Worcestershire Sauce,Worcester Sauce,Spice
+Rosemary,Rosemary,Spice
+Cumin Seed,Cumin,Spice
+Absinthe,Absinthe,Spirit
+Absolut Citron,Lemon Vodka,Spirit
+Absolut Vodka,Vodka,Spirit
+Anise,Anise,Spirit
+Anisette,Anise,Spirit
+Apple Brandy,Apple Brandy,Spirit
+Apricot Brandy,Apricot Brandy,Spirit
+Blended Whiskey,Whisky,Spirit
+Bourbon,Bourbon,Spirit
+Brandy,Brandy,Spirit
+Cachaca,Cachaca,Spirit
+Cherry Brandy,Cherry Brandy,Spirit
+Cognac,Brandy,Spirit
+Dark Rum,Rum,Spirit
+Gin,Gin,Spirit
 Irish Whiskey,Irish Whiskey,Spirit
 Islay Single Malt Scotch,Whisky,Spirit
 Jack Daniels,Bourbon,Spirit
 Jim Beam,Bourbon,Spirit
 Johnnie Walker,Whisky,Spirit
-Kahlua,Coffee Liqueur,Liqueur
-Lemon,Lemon,Fruit
-Lemon Juice,Lemon Juice,Juice
-Lemon Peel,Lemon,Fruit
 Lemon Vodka,Lemon Vodka,Spirit
-Lemonade,Lemonade,Mixer
-Light Cream,Cream,Other
 Light Rum,Light Rum,Spirit
-Lime,Lime,Fruit
-Lime Juice,Lime Juice,Juice
-Lime Peel,Lime,Fruit
-Malibu Rum,Malibu,Liqueur
-Maraschino Cherry,Maraschino Cherry,Fruit
-Milk,Milk,Other
-Mint,Mint,Spice
-Nutmeg,Nutmeg,Spice
-Olive,Olive,Other
-Orange,Orange,Fruit
-Orange Bitters,Orange Bitters,Bitter
-Orange Juice,Orange Juice,Juice
-Orange Peel,Orange,Fruit
-Passion Fruit Juice,Passion Fruit,Fruit
-Peach Schnapps,Peach Schnapps,Liqueur
-Pepper,Pepper,Assumed
 Pernod,Anise,Spirit
-Pineapple,Pineapple,Fruit
-Pineapple Juice,Pineapple Juice,Juice
-Port,Port,Fortified Wine
-Powdered Sugar,Powdered Sugar,Other
-Prosecco,Sparkling Wine,Wine
-Red Wine,Red Wine,Wine
 Ricard,Anise,Spirit
-Rosso Vermouth,Sweet Vermouth,Fortified Wine
 Rum,Rum,Spirit
 Rye Whiskey,Rye Whiskey,Spirit
-Salt,Salt,Assumed
-Sambuca,Sambucca,Liqueur
 Scotch,Whisky,Spirit
-Sherry,Sherry,Wine
-Soda Water,Soda Water,Mixer
-Southern Comfort,Southern Comfort,Liqueur
 Spiced Rum,Spiced Rum,Spirit
-Sprite,Lemonade,Mixer
-Strawberries,Strawberries,Fruit
-Sugar,Sugar,Assumed
-Sugar Syrup,Sugar Syrup,Syrup
-Sweet Vermouth,Sweet Vermouth,Fortified Wine
-Tabasco Sauce,Tabasco,Other
-Tea,Tea,Assumed
 Tequila,Tequila,Spirit
-Tia Maria,Coffee Liqueur,Liqueur
-Tomato Juice,Tomato Juice,Juice
-Tonic Water,Tonic Water,Mixer
-Triple Sec,Triple Sec,Liqueur
-Vanilla Extract,Vanilla Extract,Spice
 Vodka,Vodka,Spirit
-Water,Water,Assumed
-Whipped Cream,Cream,Other
-Whipping Cream,Cream,Other
 Whiskey,Whisky,Spirit
 Whisky,Whisky,Spirit
-White Creme De Menthe,Creme De Menthe,Liqueur
 White Rum,White Rum,Spirit
 Wild Turkey,Bourbon,Spirit
-Wine,White Wine,Wine
-Worcestershire Sauce,Worcester Sauce,Spice
-Yoghurt,Yoghurt,Other
-Drambuie,Drambuie,Liqueur
 Blended Scotch,Whisky,Spirit
-Sloe Gin,Sloe Gin,Liqueur
-Rosemary,Rosemary,Spice
-Cherry Liqueur,Cherry Liqueur,Liqueur
-Jägermeister,Jägermeister,Liqueur
-Aperol,Aperol,Liqueur
-Kiwi,Kiwi,Fruit
-Cumin Seed,Cumin,Spice
 Mezcal,Mezcal,Spirit
 Ouzo,Anise,Spirit
-Lime Juice Cordial,Lime Cordial,Syrup
 Anis,Anise,Spirit
+Blue Curacao,Blue Curacao,Syrup
+Curacao,Blue Curacao,Syrup
+Grenadine,Grenadine,Syrup
+Sugar Syrup,Sugar Syrup,Syrup
+Lime Juice Cordial,Lime Cordial,Syrup
+Champagne,Sparkling Wine,Wine
+Dry Vermouth,Dry Vermouth,Wine
+Prosecco,Sparkling Wine,Wine
+Red Wine,Red Wine,Wine
+Sherry,Sherry,Wine
+Wine,White Wine,Wine
