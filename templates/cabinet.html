@@ -76,32 +76,52 @@ function filter() {
 
 {% block left %}
 
+
+  <ul class="overflow-auto nav flex-column">
+  <li class="nav-item">
 <form action="/cabinet" method="post">
-  <input type="submit" value="Update Cabinet"><br>
+  <input type="submit" class="btn btn-dark" value="Update Cabinet"><br>
+</li>
 
-  <ul class="overflow-auto" id="cocktails">
 
-    <li>
-      <div onclick="toggleView('item', 'item')">All<br><br> </div>
+    <li class="nav-item">
+      <a class="nav-link text-dark" onclick="toggleView('item', 'item')">All </a>
+    </li>
+    
 
     {% for category in drinks_cabinet.categories %}
 
 
-    <li>
-      <div onclick="toggleView('item', '{{category}}')">{{category}}<br></div>
+    <li class="nav-item">
+      <a class="nav-link text-muted" onclick="toggleView('item', '{{category}}')">{{category}}</a>
+      
+
     </li>
+      {% endfor %}
+    </ul>
 
 
-  {% endfor %}
+
   
   {% endblock %}
 
 
   {% block right %}
- <button type="button" onclick="checkAll()">all</button> 
- <button type="button" onclick="uncheckAll()">none</button> 
- 
+<div class="container" style="height: 5%">
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-light" onclick="checkAll()">all</button> 
 
+
+      <button type="button" class="btn btn-light" onclick="uncheckAll()">none</button> 
+      </div>
+    </div>
+  </div>
+<div class="container overflow-scroll" style="height: 90%">
+  <div class="row">
+    <div class="column">
+      <ul class="overflow-auto list-group list-group-flush nav" id="items">
+  
   {% for item in drinks_cabinet.items %}
     {% set category = drinks_cabinet.items[item]['category'] %}
     
@@ -110,13 +130,18 @@ function filter() {
       {% set status = "checked" %}
     {% endif %}
   
-  <div class="item {{category}}">
-    <input class="item {{category}} form-check-input" type="checkbox" name="check" value="{{item}}" {{status}}>
-    <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label><br>
-  </div>
 
-{% endfor %}
+        <li class="item {{category}} list-group-item">
+          <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}}></input>
+          <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
 
 </form>
+
   
 {% endblock %}

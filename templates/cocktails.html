@@ -79,35 +79,45 @@ function refreshCocktails() {
 
 </script>
 
+
+
 {% endblock %}
 
 
 
 {% block left %}
 
-  <div id="selector" class="slidecontainer">
-
-
-
-    <span>Missing ingredients:</span>
-    <span id="f"></span>
-    <br>
-    <input type="range" min="0" max="9" value="0" class="slider" id="myRange" onpointerup="refreshCocktails()">
+  <div class="container" style="height: 10%">
+<div class="row">
+  <div class="col">
+    <div id="selector" class="slidecontainer">
+      <span>Maximum missing ingredients:</span>
+      <span id="f"></span>
+      <br>
+      <input type="range" min="0" max="9" value="0" class="slider" id="myRange" onpointerup="refreshCocktails()"></input>
+      </div>
+    <div class="search">
+      <input id="text_filter" type="text" onkeyup="refreshCocktails()" placeholder="Filter"></input>
+    </div>
   </div>
-  <div class="search">
-    <input id="text_filter" type="text" onkeyup="refreshCocktails()" placeholder="Search">
   </div>
-  
-  <ul class="overflow-auto"  id="cocktails">
-  
-  {% for cocktail in cocktails %}
-      <li>
-        <div missing="{{cocktail.number_missing}}" class="nav-link active" onclick="addRecipie('{{cocktail.id}}')">{{cocktail.name}}<br></div>
-      </li>
-  {% endfor %}
-  
-  </ul>
-  
+</div>
+
+  <div class="container overflow-scroll" style="height: 90%">
+<div class="row">
+  <div class="col">
+    <ul class="overflow-auto list-unstyled"  id="cocktails">
+    
+    {% for cocktail in cocktails %}
+        <li>
+          <div missing="{{cocktail.number_missing}}" class="nav-link active" onclick="addRecipie('{{cocktail.id}}')">{{cocktail.name}}<br></div>
+        </li>
+    {% endfor %}
+    
+    </ul>
+    </div>
+  </div>
+</div>
   
 <script>var slider = document.getElementById("myRange");
 var output = document.getElementById("f");
@@ -143,8 +153,6 @@ slider.oninput = function() {
 </div>
  
 {% endblock %}
-
-
 
 
 
