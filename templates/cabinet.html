@@ -77,15 +77,25 @@ function filter() {
 {% block left %}
 
 
+          <div class="wrapper" style="text-align: center">
+          <button class="btn btn-light btn-small d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#hide" aria-expanded="true" aria-controls="hide" onclick="remrecipie()">
+            Show Categories
+            </button>
+            </div>
+          <div>
+            <div class="container overflow-auto collapse in d-sm-block text-center" style="height:100%" id="hide">
+
+
+
   <ul class="overflow-auto nav flex-column">
-  <li class="nav-item">
+  <li class="nav-item d-none d-sm-block">
 <form action="/cabinet" method="post">
-  <input type="submit" class="btn btn-dark" value="Update Cabinet"><br>
+  <input type="submit" class="btn btn-dark " value="Update Cabinet"><br>
 </li>
 
 
     <li class="nav-item">
-      <a class="nav-link text-dark" onclick="toggleView('item', 'item')">All </a>
+      <a class="nav-link text-dark fw-bold" onclick="toggleView('item', 'item')" data-bs-toggle="collapse" data-bs-target="#hide">All </a>
     </li>
     
 
@@ -93,7 +103,7 @@ function filter() {
 
 
     <li class="nav-item">
-      <a class="nav-link text-muted" onclick="toggleView('item', '{{category}}')">{{category}}</a>
+      <a class="nav-link text-muted" onclick="toggleView('item', '{{category}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{category}}</a>
       
 
     </li>
@@ -101,7 +111,8 @@ function filter() {
     </ul>
 
 
-
+              </div>
+            </div>
   
   {% endblock %}
 
@@ -110,6 +121,7 @@ function filter() {
 <div class="container" style="height: 5%">
   <div class="row">
     <div class="col">
+      <input type="submit" class="btn btn-dark d-sm-none" value="Update Cabinet">
       <button type="button" class="btn btn-light" onclick="checkAll()">all</button> 
 
 
