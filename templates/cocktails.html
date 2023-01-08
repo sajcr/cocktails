@@ -104,7 +104,7 @@ function refreshCocktails() {
 
   <div>
     <div class="row">
-      <div class="col" style="height: 90px">
+      <div class="col">
         <div id="selector" class="slidecontainer">
         <span>Maximum missing ingredients:</span>
         <span id="f"></span>
@@ -112,7 +112,7 @@ function refreshCocktails() {
         <input type="range" min="0" max="9" value="0" class="slider" style="max-width:75%" id="myRange" onpointerup="refreshCocktails()"></input>
         </div>
       <div class="search">
-        <input id="text_filter" type="text" style="max-width:75%" onkeyup="refreshCocktails()" placeholder="Filter"></input>
+        <input id="text_filter" type="text" style="max-width:75%" onkeyup="refreshCocktails()" placeholder="Search"></input>
         </div>
       </div>
     </div>
@@ -123,7 +123,9 @@ function refreshCocktails() {
         <ul class="overflow-auto list-unstyled"  id="cocktails">
           {% for cocktail in cocktails %}
           <li>
-            <div missing="{{cocktail.number_missing}}" class="nav-link active" onclick="addRecipie('{{cocktail.id}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{cocktail.name}}<br>
+            <div missing="{{cocktail.number_missing}}" class="nav-link active d-none d-sm-block" onclick="addRecipie('{{cocktail.id}}')" >{{cocktail.name}}<br>
+            </div>
+            <div missing="{{cocktail.number_missing}}" class="nav-link active d-block d-sm-none" onclick="addRecipie('{{cocktail.id}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{cocktail.name}}<br>
             </div>
           </li>
         {% endfor %}

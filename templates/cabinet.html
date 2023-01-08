@@ -103,8 +103,8 @@ function filter() {
 
 
     <li class="nav-item">
-      <a class="nav-link text-muted" onclick="toggleView('item', '{{category}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{category}}</a>
-      
+      <a class="nav-link text-muted d-none d-sm-block" onclick="toggleView('item', '{{category}}')" >{{category}}</a>
+      <a class="nav-link text-muted d-block d-sm-none" onclick="toggleView('item', '{{category}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{category}}</a>
 
     </li>
       {% endfor %}
@@ -144,7 +144,7 @@ function filter() {
   
 
         <li class="item {{category}} list-group-item">
-          <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}}></input>
+          <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}} style="accent-color: gray"></input>
           <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label>
           </li>
         {% endfor %}
