@@ -382,7 +382,7 @@ def write_ingredients():
     
 
 def add_recipies():
-  db = SQL("sqlite:///./cocktails.db")
+  db = SQL("sqlite:///cocktails.db")
 
   # initiate table
   drink_ids = db.execute("SELECT idDrink FROM cocktails") 
@@ -390,6 +390,7 @@ def add_recipies():
   for drink_id in drink_ids:
     
     #amend drink id for use wuth get_drink() and request data from cocktaildb
+    print(drink_id)
     request = drink_id['idDrink'] - 11000
     cocktail = get_drink(request)
     

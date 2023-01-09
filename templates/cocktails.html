@@ -32,7 +32,7 @@ async function addRecipie(number) {
         console.log(lacks[i])
         lacks[i].style.fontWeight = "lighter";
   }
-  const element = document.getElementById("martini");
+  const element = document.getElementById("martinipic");
   element.remove();
 }
 
@@ -40,6 +40,12 @@ async function addRecipie(number) {
 
 
 <script>
+
+function clearPanel(bit) {
+  document.getElementById(bit).innerHTML = '<h1 id="drinkname"></h1><p id="glass"><p><p id="ingredients"><p><p id="instructions"></p>';
+
+}
+  
 
 function refreshCocktails() {
   // Declare variables
@@ -90,76 +96,81 @@ function refreshCocktails() {
 
 {% block left %}
 
-          <div class="wrapper" style="text-align: center">
-          <button class="btn btn-light btn-small d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#hide" aria-expanded="true" aria-controls="hide" onclick="remrecipie()">
-            Show Drinks
-            </button>
-            </div>
-          <div>
-            <div class="container overflow-auto collapse in d-sm-block text-center" style="height:100%" id="hide">
-
-
-
-
-
-  <div>
-    <div class="row">
-      <div class="col">
-        <div id="selector" class="slidecontainer">
-        <span>Maximum missing ingredients:</span>
-        <span id="f"></span>
-        <br>
-        <input type="range" min="0" max="9" value="0" class="slider" style="max-width:75%" id="myRange" onpointerup="refreshCocktails()"></input>
-        </div>
-      <div class="search">
-        <input id="text_filter" type="text" style="max-width:75%" onkeyup="refreshCocktails()" placeholder="Search"></input>
-        </div>
-      </div>
-    </div>
-    
-  <div>
-    <div class="row">
-      <div class="col overflow-scroll"  style="height: 680px">
-        <ul class="overflow-auto list-unstyled"  id="cocktails">
-          {% for cocktail in cocktails %}
-          <li>
-            <div missing="{{cocktail.number_missing}}" class="nav-link active d-none d-sm-block" onclick="addRecipie('{{cocktail.id}}')" >{{cocktail.name}}<br>
-            </div>
-            <div missing="{{cocktail.number_missing}}" class="nav-link active d-block d-sm-none" onclick="addRecipie('{{cocktail.id}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{cocktail.name}}<br>
-            </div>
-          </li>
-        {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>  
-<div>    
-  <script>var slider = document.getElementById("myRange");
-    var output = document.getElementById("f");
-    output.innerHTML = slider.value; // Display the default slider value
-
-    // Update the current slider value (each time you drag the slider handle)
-    slider.oninput = function() {
-      output.innerHTML = this.value;
-    } 
-    </script>
-
-  <script>
-  // update cocktail list on load
-    window.onload = refreshCocktails()
-    </script>
+<div class="wrapper" style="text-align: center">
+<button class="btn btn-light btn-small d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#hide" aria-expanded="true" aria-controls="hide" onclick="clearPanel('cocktailRecipie')">
+  Show Drinks
+  </button>
   </div>
-</div>
+  
 
+  <div class="container overflow-auto collapse in d-sm-block text-center" style="height:85vh" id="hide">
+
+      <div class="row">
+        <div class="col">
+          <div id="selector" class="slidecontainer">
+          <span>Maximum missing ingredients:</span>
+          <span id="f"></span>
+          <br>
+          <input type="range" min="0" max="9" value="0" class="slider" style="max-width:75%" id="myRange" onpointerup="refreshCocktails()"></input>
+          </div>
+        <div class="search">
+          <input id="text_filter" type="text" style="max-width:75%" onkeyup="refreshCocktails()" placeholder="Search"></input>
+          </div>
+      </div>
+      </div>
+   
+      
+
+      <div class="row">
+        <div class="col overflow-scroll" style="height:72vh">
+          <ul class="overflow-auto list-unstyled"  id="cocktails">
+            {% for cocktail in cocktails %}
+            <li>
+              <div missing="{{cocktail.number_missing}}" class="nav-link active d-none d-sm-block" onclick="addRecipie('{{cocktail.id}}')" >{{cocktail.name}}<br>
               </div>
-            </div>
+              <div missing="{{cocktail.number_missing}}" class="nav-link active d-block d-sm-none" onclick="addRecipie('{{cocktail.id}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{cocktail.name}}<br>
+              </div>
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+
+    </div>  
+
+   
+    <script>var slider = document.getElementById("myRange");
+      var output = document.getElementById("f");
+      output.innerHTML = slider.value; // Display the default slider value
+
+      // Update the current slider value (each time you drag the slider handle)
+      slider.oninput = function() {
+        output.innerHTML = this.value;
+      } 
+      </script>
+
+    <script>
+    // update cocktail list on load
+      window.onload = refreshCocktails()
+      </script>
+
+  </div>
+
+
+
 {% endblock %}
 
 
 
 {% block right %}
+<div class="container-fluid  text-center overflow-auto" >
 
-<img src="/static/martini.svg" class="img-fluid" alt="" id="martini"></img>
+<div class="row">
+
+<div class="column" style="height:75vh">
+
+<div id="cocktailRecipie">
+
+<img src="/static/martini.svg" class="img-fluid cocktailRecipie" alt="" id="martinipic"></img>
 
 <div id="drink">
 
@@ -171,7 +182,18 @@ function refreshCocktails() {
     
   <p id="instructions"></p>
 
+
 </div>
+
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+
  
 {% endblock %}
 
