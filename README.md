@@ -1,12 +1,12 @@
 # COCKTAILS
-#### Video Demo:  <URL HERE>
+#### Video Demo:  https://youtu.be/2E5j4VZgfUE
 #### Description:
 Cocktails is a flask webapp which enables the user to store a list of the cocktail ingredients they have, and to see which cocktails they can make from combinatiosn fo those ingredients.
 
 #### Files:
 The project includes the following files:
 
-- *./app.py* - the main flask project file containing python code which queries the saved cocktail database (see ./data/cocktails.db below) for information on drinks and ingredients.  The code defines several classes which are then used to process the information and pass relevent data to the html templates.
+- *./app.py* - the main flask project file containing python code which queries the saved cocktail database (see *./data/cocktails.db* below) for information on drinks and ingredients.  The code defines several classes which are then used to process the information and pass relevent data to the html templates.
 - *./requirements.txt* - standard flask framework file listing the required libraries
 
 - *./static/styles.css* - standard flask css file, essentially unused as the project makes extensive use of bootstrap
@@ -23,13 +23,15 @@ The project includes the following files:
 
 #### Usage:
 
-Usage is intended to be simple and inutitive.  The app has two sections, in a standard web browser each are divided into a left and right panel although this layout changes on some smaller devices:
+Usage is intended to be simple and inutitive.  The app has two sections, in a standard web browser each are divided into a left and right panel, although this layout changes on some smaller devices:
 1. **Cocktails** 
-- On the left are a list of cocktails on the left side.  Cocktails for which the user has ingredients are presented in bolder type, those where at least one ingredient is lacking are in lighter type.  A slider at the top allows the user to determine the maximum number of missing ingredients there might for each cocktail before it is removed from the list.  A search bar below allows text search of cocktail names.  By deafult the slider is set such that only cocktails for which the cabinet contains all ingredients are shown.
+- On the left are a list of cocktails.  Cocktails for which the user has ingredients are presented in bolder type, those where at least one ingredient is lacking are in lighter type.  A slider at the top allows the user to determine the maximum number of missing ingredients there might for each cocktail before it is removed from the list.  A search bar below allows text search of cocktail names.  By deafult the slider is set such that only cocktails for which the cabinet contains all ingredients are shown.
 - On the right is initially a placeholder logo.  When the user clicks on the name of one of the cocktails on the left this is replaced with the cocktail recipe.  In this recipie any ingredient missing from the cabinet is shown in light text.
 2. **Cabinet**
 - On the left is a list of categories of items. Selecting any one of these will change what is displayed on the right.
-- On the right is a list of the items within the category selected on the right.  by default all are shown.  Each item has a check box, if checked this indicate sthat the item is held by the user.  At the top of the list are buttons to check or uncheck all visible boxes.  When any box is checked or unchecked a black submit button appears.  Clicking this saves the current state fo the cabinet.  When clicked this button disappears to indicate that the current status is saved.
+- On the right is a list of the items within the category selected on the left.  By default all are shown.  Each item has a check box, if checked this indicates that the item is held by the user.  At the top of the list are buttons to check or uncheck all visible boxes.  When any box is checked or unchecked a black submit button appears.  Clicking this saves the current state of the cabinet.  When clicked this button disappears to indicate that the current state of the cabinet is saved.
 
+#### Acknowledgment
+All original cocktail data is from [thecocktaildb.com](thecocktaildb.com)
 
 

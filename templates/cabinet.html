@@ -72,10 +72,10 @@ function filter() {
 }
 
 function addButton() {
-  document.getElementById("submitButton").innerHTML = '<input type="submit" class="btn btn-dark" value="Update Cabinet" onclick="removeButton()">'
+  document.getElementById("submitButton").style.display = "inline";
 }
 function removeButton() {
-  document.getElementById("submitButton").innerHTML = ''
+  document.getElementById("submitButton").style.display = "none";
 }
 
 </script>
@@ -129,9 +129,9 @@ function removeButton() {
   <div class="container" style="text-align:center">
     <div class="row">
       <div class="col">
-        <span id="submitButton">
 
-        </span>
+        <input type="submit" class="btn btn-dark" value="Update Cabinet" onclick="removeButton()" id="submitButton">
+
         <button type="button" class="btn btn-light" onclick="checkAll(), addButton()">all</button> 
         <button type="button" class="btn btn-light" onclick="uncheckAll(), addButton()">none</button> 
         </div>
@@ -180,4 +180,7 @@ function removeButton() {
     </div>
   </div>
 </form>
+<script>
+removeButton()
+</script>
 {% endblock %}
