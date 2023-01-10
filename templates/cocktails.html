@@ -4,197 +4,158 @@
 {% block script %}
 
 <script>
-async function addRecipie(number) {
-
-  var addition
-  let response = await fetch('/drink?id=' + number);
-  let drink = await response.json();
-  document.getElementById("ingredients").innerHTML = null
-  document.getElementById("drinkname").innerHTML = drink["name"];   
-  document.getElementById("glass").innerHTML = drink["glass"]; 
-
-  for (let i = 0; i < drink["ingredients"].length; i++) {
-    var ingredient = ((drink["measures"][i] + " " + drink["ingredients"][i].trim() + "<br>").replace("  ", " ").replace("null ", "").replace("None ", ""))
-    if (drink["missing"].includes(drink["ingredients"][i])) { 
-    addition = `<div class="ingredients_lack">${ingredient}</div>`
+  // adds cocktail recipie to html
+  async function addRecipie(number) {
+    var addition
+    //requests cocktail data from server
+    let response = await fetch('/drink?id=' + number);
+    let drink = await response.json();
+    //extracts single fileds and replaces html
+    document.getElementById("ingredients").innerHTML = null
+    document.getElementById("drinkname").innerHTML = drink["name"];   
+    document.getElementById("glass").innerHTML = drink["glass"]; 
+      document.getElementById("instructions").innerHTML = drink["instructions"]; 
+    //extract, compile ingredients section, combining measures and ingredients
+    for (let i = 0; i < drink["ingredients"].length; i++) {
+      var ingredient = ((drink["measures"][i] + " " + drink["ingredients"][i].trim() + "<br>").replace("  ", " ").replace("null ", "").replace("None ", ""))
+      //add ingredient to html, including a tag to indicate whether the corresponding item is held in cabinet
+      if (drink["missing"].includes(drink["ingredients"][i])) { 
+      addition = `<div class="ingredients_lack">${ingredient}</div>`
+      }
+      else { 
+      addition = `<div class="ingredients_have">${ingredient}</div>`
+      }
+      document.getElementById("ingredients").innerHTML += addition
     }
-    else { 
-    addition = `<div class="ingredients_have">${ingredient}</div>`
+    //where element is in ingredients_lack class, make font weight dull to indicate it is lacked
+    var lacks = document.getElementsByClassName("ingredients_lack")
+    for  (i = 0; i <lacks.length; i++) {
+          console.log(lacks[i])
+          lacks[i].style.fontWeight = "lighter";
     }
-    document.getElementById("ingredients").innerHTML += addition
+    const element = document.getElementById("martinipic");
+    element.remove();
+  }
 
+  // removes the current cocktail recipie
+  function removeCocktail() {
+    document.getElementById("cocktailRecipie").innerHTML = '<h1 id="drinkname"></h1><p id="glass"><p><p id="ingredients"><p><p id="instructions"></p>';
+  }
     
+  //filters cocktails according to search string and selected missing ingredient rule
+  function refreshCocktails() {
+    // Declare variables
+    var input, ul, li, a, i, filter, txtValue, index;
+    // get acceptable missing number from slider
+    index = document.getElementById("myRange").value
+    //get the elements from html
+    ul = document.getElementById("cocktails");
+    li = ul.getElementsByTagName('li');
+    // get the current textfilter value
+    input = document.getElementById('text_filter');
+    filter = input.value.toUpperCase();
+    // Loop through all list items
+    for (i = 0; i < li.length; i++) {
+      //get individual list item
+      a = li[i].getElementsByTagName("div")[0];
+      // extract tag stating number of missing
+      missing = a.attributes.missing.textContent
+      // and the text value
+      txtValue = a.textContent || a.innerText;
+      // hide all by default
+      li[i].style.display = "none"   
+      // show if meets the text filter
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";}  
+      //if no ingredients missing then display at normal text weight
+      if (missing == 0){
+        li[i].style.fontWeight = "400";
+      //if acceptable number missing display at light text weight
+      } else if (missing <= index) {
+        li[i].style.fontWeight = "lighter";
+      //otherwise, if unacceptable number missing, hide
+      } else {
+        li[i].style.display = "none";
+      }
+    }
   }
-  document.getElementById("instructions").innerHTML = drink["instructions"]; 
-  //where element is in ingredients_lack class, make dull
-  var lacks = document.getElementsByClassName("ingredients_lack")
-  for  (i = 0; i <lacks.length; i++) {
-        console.log(lacks[i])
-        lacks[i].style.fontWeight = "lighter";
-  }
-  const element = document.getElementById("martinipic");
-  element.remove();
-}
-
-</script>
-
-
-<script>
-
-function clearPanel(bit) {
-  document.getElementById(bit).innerHTML = '<h1 id="drinkname"></h1><p id="glass"><p><p id="ingredients"><p><p id="instructions"></p>';
-
-}
-  
-
-function refreshCocktails() {
-  // Declare variables
-  var input, ul, li, a, i, filter, txtValue, index;
-  // get acceptable missing number from slider
-  index = document.getElementById("myRange").value
-  //get the elements from html
-  ul = document.getElementById("cocktails");
-  li = ul.getElementsByTagName('li');
-  // get the current textfilter value
-  input = document.getElementById('text_filter');
-  filter = input.value.toUpperCase();
-  // Loop through all list items
-  for (i = 0; i < li.length; i++) {
-    //get individual list item
-    a = li[i].getElementsByTagName("div")[0];
-    // extract tag stating number of missing
-    missing = a.attributes.missing.textContent
-    // and the text value
-    txtValue = a.textContent || a.innerText;
-    // hide all by default
-    li[i].style.display = "none"   
-    // show if meets the text filter
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = "";}  
-    //if no ingredients missing then display at normal text weight
-    if (missing == 0){
-      li[i].style.fontWeight = "400";
-    //if acceptable number missing display at light text weight
-    } else if (missing <= index) {
-      li[i].style.fontWeight = "lighter";
-    //otherwise, if unacceptable number missing, hide
-    } else {
-      li[i].style.display = "none";
-    }
-  }
-}
-
-
-
-</script>
-
-
-
+  </script>
 {% endblock %}
 
 
-
+<!-- left side block with drinks list -->
 {% block left %}
 
 <div class="wrapper" style="text-align: center">
-<button class="btn btn-light btn-small d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#hide" aria-expanded="true" aria-controls="hide" onclick="clearPanel('cocktailRecipie')">
+<!-- show drinks button, visible only on mobiles, hides cocktail list -->
+  <button class="btn btn-light btn-small d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#hide" aria-expanded="true" aria-controls="hide" onclick="removeCocktail()">
   Show Drinks
   </button>
-  </div>
-  
-
-  <div class="container overflow-auto collapse in d-sm-block text-center" style="height:85vh" id="hide">
-
-      <div class="row">
-        <div class="col">
-          <div id="selector" class="slidecontainer">
-          <span>Maximum missing ingredients:</span>
-          <span id="f"></span>
-          <br>
-          <input type="range" min="0" max="9" value="0" class="slider" style="max-width:75%" id="myRange" onpointerup="refreshCocktails()"></input>
-          </div>
-        <div class="search">
-          <input id="text_filter" type="text" style="max-width:75%" onkeyup="refreshCocktails()" placeholder="Search"></input>
-          </div>
-      </div>
-      </div>
-   
-      
-
-      <div class="row">
-        <div class="col overflow-scroll" style="height:72vh">
-          <ul class="overflow-auto list-unstyled"  id="cocktails">
-            {% for cocktail in cocktails %}
-            <li>
-              <div missing="{{cocktail.number_missing}}" class="nav-link active d-none d-sm-block" onclick="addRecipie('{{cocktail.id}}')" >{{cocktail.name}}<br>
-              </div>
-              <div missing="{{cocktail.number_missing}}" class="nav-link active d-block d-sm-none" onclick="addRecipie('{{cocktail.id}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{cocktail.name}}<br>
-              </div>
-            </li>
-          {% endfor %}
-          </ul>
+</div>
+ 
+<div class="container overflow-auto collapse in d-sm-block text-center" style="height:85vh" id="hide">
+  <!-- block containing ingredients slider and search string box -->
+  <div class="row">
+    <div class="col">
+      <div id="selector" class="slidecontainer">
+        <span>Maximum missing ingredients:</span>
+        <span id="f"></span>
+        <br>
+        <input type="range" min="0" max="9" value="0" class="slider" style="max-width:75%" id="myRange" onpointerup="refreshCocktails()"></input>
         </div>
-
+      <div class="search">
+        <input id="text_filter" type="text" style="max-width:75%" onkeyup="refreshCocktails()" placeholder="Search"></input>
+        </div>
+      </div>
+    </div>
+   
+  <!-- block continaing cocktails list, limited in size to 72vh to ensure it stays still on screen and allows scroll of content when oversized -->
+  <div class="row">
+    <div class="col overflow-scroll" style="height:72vh">
+      <ul class="overflow-auto list-unstyled"  id="cocktails">
+        {% for cocktail in cocktails %}
+        <li>
+          <div missing="{{cocktail.number_missing}}" class="nav-link active d-none d-sm-block" onclick="addRecipie('{{cocktail.id}}')" >{{cocktail.name}}<br>
+            </div>
+          <div missing="{{cocktail.number_missing}}" class="nav-link active d-block d-sm-none" onclick="addRecipie('{{cocktail.id}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{cocktail.name}}<br>
+            </div>
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
     </div>  
 
-   
-    <script>var slider = document.getElementById("myRange");
-      var output = document.getElementById("f");
-      output.innerHTML = slider.value; // Display the default slider value
+  <script>var slider = document.getElementById("myRange");
+    var output = document.getElementById("f");
+    output.innerHTML = slider.value; // Display the slider value
 
-      // Update the current slider value (each time you drag the slider handle)
-      slider.oninput = function() {
-        output.innerHTML = this.value;
-      } 
-      </script>
-
-    <script>
-    // update cocktail list on load
-      window.onload = refreshCocktails()
-      </script>
-
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+    } 
+    </script>
+  <script>
+  // update cocktail list on load
+    window.onload = refreshCocktails()
+    </script>
   </div>
-
-
-
 {% endblock %}
 
-
-
+<!-- cocktail recipie block -->
 {% block right %}
 <div class="container-fluid  text-center overflow-auto" >
-
-<div class="row">
-
-<div class="column" style="height:75vh">
-
-<div id="cocktailRecipie">
-
-<img src="/static/martini.svg" class="img-fluid cocktailRecipie" alt="" id="martinipic"></img>
-
-<div id="drink">
-
-  <h1 id="drinkname"></h1>
-  
-  <p id="glass"><p>
-   
-  <p id="ingredients"><p>
-    
-  <p id="instructions"></p>
-
-
+  <div class="row">
+    <div class="column" style="height:75vh">
+      <div id="cocktailRecipie">
+        <img src="/static/martini.svg" class="img-fluid cocktailRecipie" alt="" id="martinipic" style="height:70vh"></img>
+        <h1 id="drinkname"></h1>
+        <p id="glass"><p>
+        <p id="ingredients"><p>
+        <p id="instructions"></p>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-
- 
 {% endblock %}
 
 

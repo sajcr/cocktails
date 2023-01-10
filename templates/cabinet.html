@@ -6,12 +6,13 @@
 
 
 <script>
+// takes a class of items, hides all which do not contain target (used to hide items not in given category)
 function toggleView(items, target) {
   var items = document.getElementsByClassName(items)
   var target = target;
   for (item of items) {
     if (item.classList.contains(target)) {
-          // Hide each element by class
+    // Hide each element by class
       item.style.display = "";
     } else {
       item.style.display = "none"
@@ -74,118 +75,99 @@ function filter() {
 {% endblock %}
 
 
+
+<!-- left panel -->
 {% block left %}
 
 
 <div class="wrapper" style="text-align: center">
-  <button class="btn btn-light btn-small d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#hide" aria-expanded="true" aria-controls="hide" onclick="remrecipie()">
-  Show Categories
-  </button>
-
-
-
-  <div class="container overflow-auto collapse in d-sm-block text-center" id="hide">
-  <ul class="overflow-auto nav flex-column">
-  <li class="nav-item d-none d-sm-block">
-<form action="/cabinet" method="post">
-
-</li>
-
-
-  <li class="nav-item">
-    <a class="nav-link text-dark fw-bold d-none d-sm-block" onclick="toggleView('item', 'item')">All </a>
-        <a class="nav-link text-dark fw-bold d-block d-sm-none" onclick="toggleView('item', 'item')" data-bs-toggle="collapse" data-bs-target="#hide">All </a>
-  </li>
-    
-
-    {% for category in drinks_cabinet.categories %}
-
-
-    <li class="nav-item">
-      <a class="nav-link text-muted d-none d-sm-block" onclick="toggleView('item', '{{category}}')" >{{category}}</a>
-      <a class="nav-link text-muted d-block d-sm-none" onclick="toggleView('item', '{{category}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{category}}</a>
-
-    </li>
-      {% endfor %}
-    </ul>
-
-
-              </div>
-            </div>
   
+  <!-- button to show categories block, only visible on small screens: (d-sm-none)-->
+  <button class="btn btn-light btn-small d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#hide" aria-expanded="true" aria-controls="hide">
+  Show Categories
+    </button>
+
+  <!-- categories block --->
+  <div class="container overflow-auto collapse in d-sm-block text-center" id="hide">
+    <form action="/cabinet" method="post">
+      <ul class="overflow-auto nav flex-column">
+
+
+  <!-- 'all' category hardcoded as always required and not subject to change. different version for mobile screens to allow collapse of panel -->
+        <li class="nav-item">
+          <a class="nav-link text-dark fw-bold d-none d-sm-block" onclick="toggleView('item', 'item')">All </a>
+          <a class="nav-link text-dark fw-bold d-block d-sm-none" onclick="toggleView('item', 'item')" data-bs-toggle="collapse" data-bs-target="#hide">All </a>
+          </li>
+    
+    <!-- other categories rendered via jinja, each has an alternate for mobile screens allowing collapse -->
+    {% for category in drinks_cabinet.categories %}
+        <li class="nav-item">
+          <a class="nav-link text-muted d-none d-sm-block" onclick="toggleView('item', '{{category}}')" >{{category}}</a>
+          <a class="nav-link text-muted d-block d-sm-none" onclick="toggleView('item', '{{category}}')" data-bs-toggle="collapse" data-bs-target="#hide">{{category}}</a>
+
+          </li>
+         {% endfor %}
+        </ul>
+      </div>
+    </div>
   {% endblock %}
 
 
+
+  <!-- right panel -->
   {% block right %}
-  
 
-<div class="container" style="text-align:center">
-  <div class="row">
-    <div class="col">
-      <input type="submit" class="btn btn-dark" value="Update Cabinet">
-      <button type="button" class="btn btn-light" onclick="checkAll()">all</button> 
-
-
-      <button type="button" class="btn btn-light" onclick="uncheckAll()">none</button> 
+  <!-- buttons for controlling items -->
+  <div class="container" style="text-align:center">
+    <div class="row">
+      <div class="col">
+        <input type="submit" class="btn btn-dark" value="Update Cabinet">
+        <button type="button" class="btn btn-light" onclick="checkAll()">all</button> 
+        <button type="button" class="btn btn-light" onclick="uncheckAll()">none</button> 
+        </div>
       </div>
-    </div>
 
-
-<!-- items block to display on larger devices -->
-<div class="d-none d-sm-block itemsBlock">
-  <div class="row overflow-scroll" style="height:80vh">
-    <div class="column">
-      <ul class="overflow-auto list-group list-group-flush nav" id="items">
-  
-  {% for item in drinks_cabinet.items %}
-    {% set category = drinks_cabinet.items[item]['category'] %}
-    
-    {% set status = "" %}
-    {% if drinks_cabinet.items[item]['have'] %}
-      {% set status = "checked" %}
-    {% endif %}
-  
-
-        <li class="item {{category}} list-group-item">
-          <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}}></input>
-          <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label>
-          </li>
-        {% endfor %}
+  <!-- items block to display on larger devices -->
+  <div class="d-none d-sm-block itemsBlock">
+    <div class="row overflow-scroll" style="height:80vh">
+      <div class="column">
+        <ul class="overflow-auto list-group list-group-flush nav" id="items">
+        {% for item in drinks_cabinet.items %}
+          {% set category = drinks_cabinet.items[item]['category'] %}    
+          {% set status = "" %}
+          {% if drinks_cabinet.items[item]['have'] %}
+            {% set status = "checked" %}
+          {% endif %}
+          <li class="item {{category}} list-group-item">
+            <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}}></input>
+            <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label>
+            </li>
+          {% endfor %}
         </ul>
       </div>
     </div>
   </div>
 
-
-<!-- items block to display on mobile phones -->
-<div class="d-block d-sm-none itemsBlock">
-  <div class="row overflow-scroll" style="height:60vh">
-    <div class="column">
-      <ul class="overflow-auto list-group list-group-flush nav" id="items">
-  
-  {% for item in drinks_cabinet.items %}
-    {% set category = drinks_cabinet.items[item]['category'] %}
-    
-    {% set status = "" %}
-    {% if drinks_cabinet.items[item]['have'] %}
-      {% set status = "checked" %}
-    {% endif %}
-  
-
-        <li class="item {{category}} list-group-item">
-          <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}}></input>
-          <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label>
-          </li>
-        {% endfor %}
-        </ul>
+  <!-- items block to display on mobile phones -->
+  <div class="d-block d-sm-none itemsBlock">
+    <div class="row overflow-scroll" style="height:60vh">
+      <div class="column">
+        <ul class="overflow-auto list-group list-group-flush nav" id="items">
+        {% for item in drinks_cabinet.items %}
+          {% set category = drinks_cabinet.items[item]['category'] %}
+          {% set status = "" %}
+          {% if drinks_cabinet.items[item]['have'] %}
+            {% set status = "checked" %}
+            {% endif %}
+            <li class="item {{category}} list-group-item">
+              <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}}></input>
+              <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-
 </form>
-
-  
 {% endblock %}

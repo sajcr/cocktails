@@ -1,6 +1,5 @@
 import json
 import requests
-import pickle
 import csv
 import pandas
 import sqlite3
@@ -14,9 +13,7 @@ from cs50 import SQL
 def get_drink(drink_id):
 
     # queries the api for drink corresponding to drink id
-    response = requests.get(
-        f"http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={11000 + drink_id}"
-    )
+    response = requests.get(f"http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={11000 + drink_id}")
 
     data = response.json()
 
@@ -112,7 +109,6 @@ def get_cocktails():
                     if entry in [
                         "Cider",
                         "Apple Cider",
-                        "Coconut Milk",
                         "Hot Chocolate",
                         "Absolut Citron",
                         "Lemon Vodka",
@@ -403,7 +399,7 @@ def add_recipies():
 
 
 def add_number_ingredients():
-  db = SQL("sqlite:///./cocktails.db")
+  db = SQL("sqlite:///cocktails.db")
   
   #get relevant data from db
   drinks = db.execute("SELECT idDrink,strIngredient1,strIngredient2,strIngredient3,strIngredient4,strIngredient5,strIngredient6,strIngredient7,strIngredient8,strIngredient9,strIngredient10,strIngredient11,strIngredient12,strIngredient13,strIngredient14,strIngredient15 FROM cocktails") 
@@ -423,21 +419,50 @@ def add_number_ingredients():
     #add the ingredients number into the db
     db.execute("UPDATE cocktails SET numIngredients = ? WHERE idDrink = ?", count, drink['idDrink']) 
     print(f"{drink['idDrink']} - {count}")
-        
-      
     
+    
+    
+def apply_corrections():
+  db = SQL("sqlite:///cocktails.db")
+
+  #add the ingredients number into the db
+  print("\nGinger Wine amendments: \n")
   
+  try:
+    db.execute("UPDATE cocktails SET strIngredient2 = ?, strMeasure2 = ? WHERE idDrink = ?", "Ginger Wine", "1 Oz", 11052)
+    print("Archbishop amended")
+  except:
+    print("Archbishop not amended")
+    
+  try:
+    db.execute("UPDATE cocktails SET strIngredient3 = ?, strMeasure3 = ? WHERE idDrink = ?", "Ginger Wine", "1/2 Oz", 11255)
+    print("Clove cocktail amended")
+  except:
+    print("Clove cocktail not amended")
+    
+  try:
+    db.execute("UPDATE cocktails SET strIngredient2 = ?, strMeasure2 = ? WHERE idDrink = ?", "Ginger Wine", "1 Oz", 12388)
+    print("Thriller amended")
+  except:
+    print("Thriller not amended")
+    
+  try:
+    db.execute("UPDATE cocktails SET strIngredient2 = ?, strMeasure2 = ? WHERE idDrink = ?", "Ginger Wine", "1 Oz", 12518)
+    print("Whisky Mac amended")
+  except:
+    print("Whisky Mac not amended")
+    
 
     
 def main():
     while True:
         print(
-            "\n1. Get cocktails.csv \n2. Write cocktails to database \n3. Check ingredients \n4. Write ingredients to database\n5. Add recipies to database\n6. Add number of ingredients to database"
+            "\n1. Get cocktails.csv \n2. Write cocktails to database \n3. Check ingredients \n4. Write ingredients to database\n5. Add recipies to database\n6. Add number of ingredients to database\n7. Apply hard-coded corrections"
         )
-        choice = input("Enter 1, 2, 3, 4, 5 or 6: ")
+        choice = input("Enter 1, 2, 3, 4, 5, 6 or 7: ")
         if choice == "1":
             get_cocktails()
-            print("\n Don't forget to clean up cocktails.csv before proceeding")
+            print("\n Don't forget to clean up cocktails.csv before proceeding (remove dead lines and excess commas)")
         elif choice == "2":
             write_cocktails()
         elif choice == "3":
@@ -447,7 +472,9 @@ def main():
         elif choice == "5":
             add_recipies()
         elif choice == "6":
-          add_number_ingredients()
+            add_number_ingredients()
+        elif choice == "7":
+            apply_corrections()
         else:
             pass
 
