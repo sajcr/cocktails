@@ -70,6 +70,14 @@ function filter() {
     }
   }
 }
+
+function addButton() {
+  document.getElementById("submitButton").innerHTML = '<input type="submit" class="btn btn-dark" value="Update Cabinet" onclick="removeButton()">'
+}
+function removeButton() {
+  document.getElementById("submitButton").innerHTML = ''
+}
+
 </script>
 
 {% endblock %}
@@ -121,9 +129,11 @@ function filter() {
   <div class="container" style="text-align:center">
     <div class="row">
       <div class="col">
-        <input type="submit" class="btn btn-dark" value="Update Cabinet">
-        <button type="button" class="btn btn-light" onclick="checkAll()">all</button> 
-        <button type="button" class="btn btn-light" onclick="uncheckAll()">none</button> 
+        <span id="submitButton">
+
+        </span>
+        <button type="button" class="btn btn-light" onclick="checkAll(), addButton()">all</button> 
+        <button type="button" class="btn btn-light" onclick="uncheckAll(), addButton()">none</button> 
         </div>
       </div>
 
@@ -139,7 +149,7 @@ function filter() {
             {% set status = "checked" %}
           {% endif %}
           <li class="item {{category}} list-group-item">
-            <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}}></input>
+            <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}} onclick="addButton()"></input>
             <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label>
             </li>
           {% endfor %}
@@ -160,7 +170,7 @@ function filter() {
             {% set status = "checked" %}
             {% endif %}
             <li class="item {{category}} list-group-item">
-              <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}}></input>
+              <input class="form-check-input item {{category}}" type="checkbox" name="check" value="{{item}}" {{status}} onclick="addButton()"></input>
               <label class="item {{category}} form-check-label" for="{{item}}">{{item}}</label>
               </li>
             {% endfor %}

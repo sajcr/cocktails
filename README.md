@@ -23,9 +23,13 @@ The project includes the following files:
 
 #### Usage:
 
-Usage is intended to be simple.  The app has two sections, in a standard web browser each are divided into a left and right panel although this layout changes on some smaller devices:
+Usage is intended to be simple and inutitive.  The app has two sections, in a standard web browser each are divided into a left and right panel although this layout changes on some smaller devices:
 1. **Cocktails** 
-- On the left are a list of cocktails on the left side.  Cocktails for which the user has ingredients are presented in bolder type, those where at least one ingredient is lacking are in lighter type.  A slider at the top allows the user to determine the maximum number of missing ingredients there might for each cocktail before it is removed from the list.  A search bar below allows textual search of showing cocktail names.  By deafult the slider is set such that only cocktails for which the cabinet contains all ingredients are shown.
+- On the left are a list of cocktails on the left side.  Cocktails for which the user has ingredients are presented in bolder type, those where at least one ingredient is lacking are in lighter type.  A slider at the top allows the user to determine the maximum number of missing ingredients there might for each cocktail before it is removed from the list.  A search bar below allows text search of cocktail names.  By deafult the slider is set such that only cocktails for which the cabinet contains all ingredients are shown.
 - On the right is initially a placeholder logo.  When the user clicks on the name of one of the cocktails on the left this is replaced with the cocktail recipe.  In this recipie any ingredient missing from the cabinet is shown in light text.
 2. **Cabinet**
+- On the left is a list of categories of items. Selecting any one of these will change what is displayed on the right.
+- On the right is a list of the items within the category selected on the right.  by default all are shown.  Each item has a check box, if checked this indicate sthat the item is held by the user.  At the top of the list are buttons to check or uncheck all visible boxes.  When any box is checked or unchecked a black submit button appears.  Clicking this saves the current state fo the cabinet.  When clicked this button disappears to indicate that the current status is saved.
+
+
 
